@@ -1,0 +1,1337 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Miami PFAS · For Mothers · What's in your tap, what's rising in your kids</title>
+<meta name="description" content="Miami-Dade tap water PFAS levels by utility. Florida cancer incidence by type. Pediatric conditions trending upward in Miami-Dade. Every number sourced. For Miami mothers." />
+<!-- No external font loads — fully self-contained. Uses native system fonts for premium rendering on all platforms. -->
+
+<style>
+  :root{
+    --ink:#0A0A0A; --navy:#0F2A4A; --rule:#2E75B6;
+    --stone:#5C6470; --hair:#ECECEC; --soft:#FAFAFA;
+    --accent:#9C7B3A; --red:#B23B3B; --green:#3E7C5A;
+    --serif:'Iowan Old Style','Charter','Hoefler Text','Times New Roman',Georgia,serif;
+    --sans:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Segoe UI',Roboto,'Helvetica Neue',Arial,system-ui,sans-serif;
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{font-family:var(--sans);background:#fff;color:var(--ink);line-height:1.55;
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px}
+  .narrow{max-width:880px;margin:0 auto;padding:0 28px}
+
+  /* NAV */
+  nav.top{position:sticky;top:0;background:rgba(255,255,255,.95);
+    backdrop-filter:blur(10px);border-bottom:1px solid var(--hair);z-index:50;padding:14px 0}
+  nav.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:24px}
+  .brand{font-family:var(--serif);font-weight:700;font-size:17px}
+  .brand .dot{display:inline-block;width:8px;height:8px;background:var(--accent);border-radius:50%;margin-right:10px;vertical-align:middle}
+  .brand small{display:block;font-family:var(--sans);font-weight:400;font-size:10.5px;letter-spacing:.22em;color:var(--stone);text-transform:uppercase;margin-top:2px}
+  .cta-top{background:var(--ink);color:#fff;padding:10px 18px;border-radius:3px;
+    font-weight:700;font-size:13px;text-decoration:none;letter-spacing:.04em;white-space:nowrap}
+
+  /* HERO */
+  .hero{padding:120px 0 80px;border-bottom:1px solid var(--hair)}
+  .hero .eyeb{font-family:var(--sans);font-size:11px;letter-spacing:.42em;text-transform:uppercase;color:var(--rule);font-weight:700;margin-bottom:28px}
+  .hero h1{font-family:var(--serif);font-weight:300;
+    font-size:clamp(36px,5.2vw,72px);line-height:1.04;letter-spacing:-.014em;
+    margin:0 0 26px;max-width:920px}
+  .hero h1 .hi{background:linear-gradient(transparent 70%,rgba(230,179,85,.30) 70%);padding:0 4px}
+  .hero h1 em{font-style:italic;color:var(--stone);font-weight:300}
+  .hero .deck{font-family:var(--serif);font-style:italic;font-size:clamp(18px,2vw,22px);
+    line-height:1.55;color:var(--stone);max-width:780px;margin-bottom:42px}
+  .hero .deck strong{color:var(--ink);font-style:normal;font-weight:600}
+
+  /* ZIP picker */
+  .zip-card{background:var(--soft);border:1px solid var(--hair);border-radius:4px;
+    padding:32px 36px;max-width:780px}
+  .zip-card label{display:block;font-family:var(--sans);font-size:11px;letter-spacing:.32em;
+    text-transform:uppercase;color:var(--rule);font-weight:700;margin-bottom:14px}
+  .zip-card .row{display:flex;gap:12px;flex-wrap:wrap}
+  .zip-card select{flex:1 1 260px;padding:14px 16px;font-family:var(--serif);font-size:17px;
+    border:1px solid #D0D5DB;background:#fff;border-radius:3px;cursor:pointer}
+  .zip-card button{padding:14px 26px;font-family:var(--sans);font-weight:700;font-size:14px;
+    background:var(--ink);color:#fff;border:none;border-radius:3px;cursor:pointer;letter-spacing:.03em}
+  .zip-card .note{font-family:var(--sans);font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--stone);font-weight:600;margin-top:14px}
+
+  /* Result panel */
+  .result{margin-top:32px;display:none}
+  .result.active{display:block;animation:fadeIn .3s ease}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .result .head{font-family:var(--serif);font-weight:700;font-size:clamp(22px,2.6vw,32px);
+    color:var(--ink);margin:0 0 18px;line-height:1.2;letter-spacing:-.005em}
+  .result .head .pill{display:inline-block;padding:5px 12px;background:var(--red);color:#fff;
+    border-radius:99px;font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:.16em;
+    text-transform:uppercase;margin-right:12px;vertical-align:middle}
+  .result-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:24px 0}
+  @media (max-width:860px){.result-grid{grid-template-columns:repeat(2,1fr)}}
+  .stat-tile{background:#fff;border:1px solid var(--hair);padding:22px 18px;border-radius:4px}
+  .stat-tile .lab{font-family:var(--sans);font-size:10.5px;letter-spacing:.28em;text-transform:uppercase;
+    color:var(--stone);font-weight:700;margin-bottom:10px}
+  .stat-tile .num{font-family:var(--serif);font-weight:700;font-size:34px;line-height:1;
+    color:var(--ink);margin-bottom:6px;letter-spacing:-.015em}
+  .stat-tile .num.red{color:var(--red)}
+  .stat-tile .num.good{color:var(--green)}
+  .stat-tile .ctx{font-family:var(--serif);font-style:italic;font-size:13px;color:var(--stone);line-height:1.5}
+
+  /* SECTION basics */
+  section.bk{padding:120px 0 100px;border-bottom:1px solid var(--hair)}
+  section.bk.alt{background:var(--soft)}
+  section.bk .eyeb{font-family:var(--sans);font-size:11px;letter-spacing:.42em;text-transform:uppercase;
+    color:var(--rule);font-weight:700;margin-bottom:22px}
+  section.bk h2{font-family:var(--serif);font-weight:300;font-size:clamp(28px,3.8vw,52px);
+    line-height:1.08;letter-spacing:-.012em;margin:0 0 22px;color:var(--ink);max-width:920px}
+  section.bk h2 strong{font-weight:700}
+  section.bk h2 em{font-style:italic;color:var(--stone);font-weight:300}
+  section.bk .lede{font-family:var(--serif);font-style:italic;font-size:19px;color:var(--stone);
+    line-height:1.55;max-width:820px;margin:0 0 48px}
+
+  /* The 5 headline numbers */
+  .headlines{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--hair);
+    border:1px solid var(--hair);margin-bottom:36px}
+  @media (max-width:1000px){.headlines{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:520px){.headlines{grid-template-columns:1fr}}
+  .headline{background:#fff;padding:36px 24px;text-align:left}
+  .headline .lab{font-family:var(--sans);font-size:10.5px;letter-spacing:.28em;text-transform:uppercase;
+    color:var(--stone);font-weight:700;margin-bottom:18px}
+  .headline .big{font-family:var(--serif);font-weight:700;font-size:clamp(38px,4.2vw,64px);
+    line-height:1;color:var(--ink);margin-bottom:14px;letter-spacing:-.02em}
+  .headline .big.red{color:var(--red)}
+  .headline .desc{font-family:var(--serif);font-size:13.5px;line-height:1.55;color:var(--stone);font-style:italic}
+  .headline .src{font-family:var(--sans);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+    color:#7a8294;font-weight:600;margin-top:14px;padding-top:10px;border-top:1px solid var(--hair)}
+  .headline .src a{color:var(--rule);text-decoration:none;border-bottom:1px dotted var(--rule)}
+
+  /* Condition rows */
+  .cond-list{border-top:1px solid var(--hair)}
+  .cond-row{display:grid;grid-template-columns:1fr 140px 140px 100px;gap:20px;
+    padding:24px 0;border-bottom:1px solid var(--hair);align-items:start}
+  @media (max-width:780px){.cond-row{grid-template-columns:1fr;gap:8px}}
+  .cond-row .cond-name{font-family:var(--serif);font-weight:700;font-size:18px;color:var(--ink)}
+  .cond-row .cond-detail{font-family:var(--serif);font-size:14.5px;color:var(--stone);font-style:italic;
+    margin-top:4px;line-height:1.5}
+  .cond-row .cond-detail strong{color:var(--navy);font-weight:600;font-style:normal}
+  .cond-row .col-num{font-family:var(--serif);font-weight:700;font-size:22px;color:var(--ink);line-height:1}
+  .cond-row .col-num .small{display:block;font-family:var(--sans);font-size:10px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--stone);font-weight:600;margin-top:6px}
+  .cond-row .col-num.red{color:var(--red)}
+  .cond-row .col-num.green{color:var(--green)}
+  .cond-row .cond-trend{font-family:var(--sans);font-size:13px;color:var(--ink);font-weight:600}
+  .cond-row .cond-trend.up{color:var(--red)}
+  .cond-row .cond-trend.down{color:var(--green)}
+  .cond-row .cond-pfas{display:inline-block;padding:3px 10px;font-family:var(--sans);font-size:10.5px;
+    font-weight:700;letter-spacing:.14em;text-transform:uppercase;border-radius:2px}
+  .pfas-strong{background:#f9e6e6;color:var(--red)}
+  .pfas-mod{background:#fcf2dc;color:#94661c}
+  .pfas-em{background:#eef0f5;color:#42526e}
+  .pfas-low{background:#e7f1ea;color:var(--green)}
+
+  /* Water table */
+  table.water{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--hair)}
+  table.water th{background:var(--soft);font-family:var(--sans);font-size:11px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--ink);font-weight:700;padding:18px 14px;text-align:left;
+    border-bottom:1px solid var(--hair)}
+  table.water td{padding:18px 14px;font-family:var(--serif);font-size:15px;color:var(--ink);
+    border-bottom:1px solid var(--hair);line-height:1.4}
+  table.water td .util{font-weight:700}
+  table.water td .pwsid{font-family:var(--sans);font-size:11px;color:var(--stone);font-weight:600;
+    letter-spacing:.06em;margin-top:3px}
+  table.water td .ppt{font-family:var(--serif);font-weight:700;font-size:18px}
+  table.water td .ppt.red{color:var(--red)}
+  table.water td .multiple{font-family:var(--sans);font-size:11px;color:var(--stone);font-weight:600;
+    letter-spacing:.06em;margin-top:3px}
+  @media (max-width:680px){table.water,table.water tbody,table.water tr,table.water td{display:block;width:100%}
+    table.water thead{display:none}table.water td{border-bottom:none;padding:8px 14px}
+    table.water tr{border-bottom:1px solid var(--hair);padding:14px 0}}
+
+  /* Action band */
+  .action-band{background:var(--ink);color:#fff;padding:80px 0}
+  .action-band h2{font-family:var(--serif);font-weight:300;font-size:clamp(28px,3.8vw,48px);
+    color:#fff;margin:0 0 22px;line-height:1.1}
+  .action-band p{font-family:var(--serif);font-style:italic;font-size:18px;color:#a8b3c5;
+    line-height:1.55;margin:0 0 28px;max-width:780px}
+  .action-band .cta-primary{display:inline-block;padding:18px 32px;background:var(--accent);
+    color:var(--ink);font-family:var(--sans);font-weight:700;font-size:14px;letter-spacing:.04em;
+    text-decoration:none;border-radius:3px;margin-right:18px}
+  .action-band .cta-note{font-family:var(--sans);font-size:11.5px;color:#7a8294;
+    letter-spacing:.16em;text-transform:uppercase;font-weight:600;display:inline-block;margin-top:14px}
+
+  /* SOURCES */
+  .sources{padding:60px 0;background:var(--soft);font-size:13px}
+  .sources h3{font-family:var(--serif);color:var(--ink);font-size:18px;margin:0 0 16px}
+  .sources ul{margin:0;padding:0;list-style:none;columns:2;column-gap:36px}
+  @media (max-width:680px){.sources ul{columns:1}}
+  .sources li{margin-bottom:10px;break-inside:avoid;color:var(--stone);line-height:1.5}
+  .sources a{color:var(--rule);text-decoration:none;border-bottom:1px dotted var(--rule)}
+
+  footer.foot{background:var(--ink);color:#9aa3b3;padding:36px 0;font-size:13px;line-height:1.6}
+  footer.foot a{color:var(--accent);text-decoration:none}
+  footer.foot .disclosure{font-style:italic;max-width:960px;font-size:11.5px;color:#5a6680;
+    margin-top:16px;line-height:1.6}
+
+  /* Toggle */
+  details{margin:24px 0;border:1px solid var(--hair);border-radius:4px;background:#fff}
+  details summary{padding:18px 24px;font-family:var(--sans);font-weight:700;font-size:13.5px;
+    letter-spacing:.06em;cursor:pointer;list-style:none;color:var(--navy)}
+  details summary::after{content:"+";float:right;font-size:18px;color:var(--accent)}
+  details[open] summary::after{content:"−"}
+  details .body{padding:0 24px 24px;font-family:var(--serif);font-size:15px;color:var(--ink);line-height:1.6}
+
+  /* Reassurance Gap — public quote / federal court admission grid (collapses 2-col → 1-col on mobile) */
+  .reassure-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:32px}
+  @media (max-width:780px){.reassure-grid{grid-template-columns:1fr;gap:16px;margin-top:20px}}
+
+  /* Tables inside detail toggles (airport AFFF, timeline) — horizontal-scroll on narrow viewports */
+  details table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  @media (max-width:640px){
+    details table{font-size:12.5px}
+    details table th,details table td{padding:6px 8px !important;white-space:nowrap}
+  }
+
+  /* ================ COMPREHENSIVE MOBILE BREAKPOINT ================ */
+  @media (max-width:640px){
+    /* Page-level: tighten gutters and reduce hero top padding so the headline reads above the fold */
+    .wrap,.narrow{padding:0 18px}
+    .hero{padding:64px 0 48px}
+
+    /* Nav — shrink the CTA so it fits next to the brand on phones */
+    nav.top{padding:10px 0}
+    nav.top .wrap{gap:12px}
+    .brand{font-size:15px}
+    .brand small{font-size:9.5px;letter-spacing:.18em}
+    .cta-top{padding:8px 12px;font-size:11.5px;letter-spacing:.02em}
+
+    /* Hero headline + deck */
+    .hero .eyeb{letter-spacing:.28em;margin-bottom:18px}
+    .hero h1{font-size:clamp(32px,8vw,44px);letter-spacing:-.01em;margin-bottom:18px}
+    .hero .deck{font-size:15px;line-height:1.5;margin-bottom:28px}
+
+    /* EPA callout — reduce inner padding and font-size for phones */
+    .hero .narrow > div[style*="border-left"]{padding:18px 18px 16px !important;margin-bottom:28px !important}
+    .hero .narrow > div[style*="border-left"] p{font-size:15px !important;line-height:1.5 !important}
+    .hero .narrow > div[style*="border-left"] ul{font-size:14.5px !important;line-height:1.55 !important;padding-left:18px !important}
+
+    /* ZIP picker — stack the select + button cleanly */
+    .zip-card{padding:22px 18px}
+    .zip-card .row{flex-direction:column;gap:10px}
+    .zip-card select,.zip-card button{flex:1 1 100%;width:100%}
+    .zip-card label{font-size:10.5px;letter-spacing:.22em}
+
+    /* Result panel after ZIP select */
+    .result .head{font-size:22px;line-height:1.2}
+
+    /* Section headers — make them readable on small screens */
+    section.bk{padding:48px 0 36px}
+    section.bk .eyeb{font-size:10px;letter-spacing:.28em;margin-bottom:14px}
+    section.bk h2{font-size:clamp(24px,6.5vw,32px);line-height:1.15;margin-bottom:14px}
+    section.bk .lede{font-size:15.5px;line-height:1.5}
+
+    /* 5 headlines: already collapses to 1-col via existing @media; reduce inner padding */
+    .headline{padding:24px 18px}
+    .headline .big{font-size:42px}
+    .headline .lab{font-size:9.5px;letter-spacing:.18em}
+    .headline .desc{font-size:14px;line-height:1.5}
+
+    /* Condition rows — already 1-col on small via existing @media; tighten typography */
+    .cond-row{padding:18px 0}
+    .cond-name{font-size:16.5px !important;line-height:1.3 !important}
+    .cond-detail{font-size:14px !important;line-height:1.5 !important}
+    .col-num{font-size:24px !important}
+
+    /* Stat tiles in fertility + ZIP result panel */
+    .result-grid{grid-template-columns:1fr !important;gap:10px}
+    .stat-tile{padding:18px 18px}
+    .stat-tile .num{font-size:28px}
+
+    /* Sources panel — single column, smaller type */
+    .sources{padding:36px 0}
+    .sources h3{font-size:15px}
+    .sources ul li{font-size:13px;line-height:1.45;margin-bottom:8px}
+
+    /* Action band */
+    .action-band{padding:48px 0}
+    .action-band h2{font-size:26px !important;line-height:1.2}
+    .action-band p{font-size:15px;line-height:1.5}
+    .cta-primary{display:inline-block;padding:14px 22px;font-size:14px}
+
+    /* Footer */
+    footer.foot{padding:28px 0;font-size:12.5px}
+  }
+
+  /* Tiny phones (iPhone SE, etc.) */
+  @media (max-width:380px){
+    .wrap,.narrow{padding:0 14px}
+    .hero h1{font-size:30px}
+    section.bk h2{font-size:22px}
+    .headline .big{font-size:36px}
+  }
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <div class="wrap">
+    <div class="brand"><span class="dot"></span>Project Miami<small>For Mothers · Forever Chemicals · In Partnership with Culligan Florida</small></div>
+    <a href="#act" class="cta-top">Join the briefing →</a>
+  </div>
+</nav>
+
+<!-- ============================= HERO ============================= -->
+<header class="hero">
+  <div class="narrow">
+    <div class="eyeb"><span style="display:inline-block;width:6px;height:6px;background:var(--accent);border-radius:50%;margin-right:10px;vertical-align:middle"></span>For Miami mothers · Florida & federal data · sourced</div>
+
+    <h1>What is in <span class="hi">your tap.</span><br>What is <em>rising in your child.</em></h1>
+
+    <p class="deck">
+      Every PFAS reading on this page comes from the <strong>EPA UCMR5</strong>, the
+      <strong>Florida Department of Environmental Protection</strong>, your utility's own
+      annual report, or a <strong>peer-reviewed study from FIU's Institute of Environment</strong>.
+      Every health number comes from the <strong>NCI State Cancer Profiles</strong>,
+      <strong>FLHealthCHARTS</strong>, <strong>CDC ADDM</strong>, the <strong>Florida Birth
+      Defects Registry</strong>, or <strong>OneFlorida+</strong>. Pick your ZIP code.
+    </p>
+
+    <!-- EPA callout — pregnant women and children, verbatim -->
+    <div style="border-left:3px solid var(--accent);background:var(--soft);padding:26px 30px 24px;margin:0 0 42px;max-width:780px">
+      <div style="font-family:var(--sans);font-size:10.5px;letter-spacing:.32em;text-transform:uppercase;color:var(--rule);font-weight:700;margin-bottom:16px">From the U.S. EPA · who is most at risk</div>
+      <p style="font-family:var(--serif);font-style:italic;font-size:18px;line-height:1.55;color:var(--ink);margin:0 0 18px">
+        "Pregnant and lactating women tend to drink more water per pound of body weight than the average person and as a result they may have <strong style="font-style:normal">higher PFAS exposure</strong> compared to other people if it is present in their drinking water."
+      </p>
+      <div style="font-family:var(--serif);font-weight:700;font-size:18px;color:var(--ink);margin:0 0 10px">Children</div>
+      <p style="font-family:var(--serif);font-style:italic;font-size:18px;line-height:1.55;color:var(--ink);margin:0 0 14px">
+        "Because children are still developing, they may be <strong style="font-style:normal">more sensitive to the harmful effects</strong> of chemicals such as PFAS. They can also be exposed more than adults because children drink more water, eat more food, and breathe more air per pound of body weight than adults, which can increase their exposure to PFAS."
+      </p>
+      <div style="font-family:var(--sans);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--rule);font-weight:700;margin:18px 0 10px">Documented effects per EPA:</div>
+      <ul style="font-family:var(--serif);font-size:16.5px;line-height:1.65;color:var(--ink);margin:0;padding:0 0 0 22px">
+        <li>Reproductive effects such as <strong>decreased fertility</strong> or <strong>increased high blood pressure in pregnant women.</strong></li>
+        <li>Developmental effects or delays in children, including <strong>low birth weight, accelerated puberty, bone variations, or behavioral changes.</strong></li>
+        <li>Increased risk of some cancers, including <strong>prostate, kidney, and testicular cancers.</strong></li>
+        <li>Reduced ability of the body's immune system to fight infections, including <strong>reduced vaccine response.</strong></li>
+        <li>Interference with the body's <strong>natural hormones.</strong></li>
+        <li>Increased <strong>cholesterol levels and/or risk of obesity.</strong></li>
+      </ul>
+      <div style="font-family:var(--sans);font-size:11px;letter-spacing:.18em;color:var(--stone);margin-top:18px"><strong>Source:</strong> U.S. Environmental Protection Agency — Our Current Understanding of the Human Health and Environmental Risks of PFAS</div>
+    </div>
+
+    <div class="zip-card">
+      <label>Where in Miami-Dade do you live?</label>
+      <div class="row">
+        <select id="zipPicker">
+          <option value="">— Choose your area —</option>
+          <option value="hialeah">Hialeah · Hialeah Gardens (33010–33018)</option>
+          <option value="doral">Doral (33122, 33126, 33172, 33178)</option>
+          <option value="miami-beach">Miami Beach (33139, 33140, 33141)</option>
+          <option value="grapeland">Grapeland Heights · near MIA (33126, 33142)</option>
+          <option value="coral-gables">Coral Gables (33134, 33146)</option>
+          <option value="pinecrest">Pinecrest · Kendall · South Miami (33156, 33176)</option>
+          <option value="north-miami-beach">North Miami Beach (33160, 33162, 33179)</option>
+          <option value="aventura">Aventura (33180) — WASD REDAVO subsystem</option>
+          <option value="homestead">Homestead · Florida City (33030–33035)</option>
+          <option value="key-biscayne">Key Biscayne · Brickell (33109, 33131, 33149)</option>
+        </select>
+        <button onclick="showZip()">Show me</button>
+      </div>
+      <div class="note">Source: EPA UCMR5 · Florida DEP · utility annual water-quality reports</div>
+    </div>
+
+    <div id="result" class="result"></div>
+  </div>
+</header>
+
+<!-- ============================= FERTILITY ============================= -->
+<section class="bk alt">
+  <div class="wrap">
+    <div class="eyeb">Fertility, pregnancy, and the first 1,000 days</div>
+    <h2>Miami mothers are still <em>getting pregnant</em> — but the pregnancies are <strong>getting more dangerous</strong>, and the babies need <strong>more intensive care.</strong></h2>
+    <p class="lede">Honest framing: Miami-Dade does NOT show a county-aggregate fertility-rate collapse. The general fertility rate (57.8/1,000 in 2023) is actually higher than the US (54.5/1,000) and Florida (53.9/1,000), propped up by foreign-born Hispanic mothers with higher fertility. The fertility crisis is real elsewhere in the data:</p>
+
+    <div class="result-grid" style="margin-top:24px">
+      <div class="stat-tile">
+        <div class="lab">Broward birthing hospitals · HDP</div>
+        <div class="num red">9.4%</div>
+        <div class="ctx"><strong>2.2× the 30-year US baseline of 4.2%.</strong> Memorial Healthcare System (Broward), October 2022. Closest published South Florida proxy for Miami-Dade.</div>
+      </div>
+      <div class="stat-tile">
+        <div class="lab">Miami-Dade infant mortality, 10-yr</div>
+        <div class="num red">+9%</div>
+        <div class="ctx">2013 → 2023, while US infant mortality declined. March of Dimes PeriStats.</div>
+      </div>
+      <div class="stat-tile">
+        <div class="lab">Miami-Dade low birth weight</div>
+        <div class="num red">8.1%</div>
+        <div class="ctx">1 in 12 babies. Black infants 14.0% vs White 6.5% — a 2× disparity. PeriStats 2021–2023.</div>
+      </div>
+      <div class="stat-tile">
+        <div class="lab">US NICU admission rate</div>
+        <div class="num red">9.8%</div>
+        <div class="ctx">Up from 8.7% in 2016 — a 13% relative increase — without a proportionate rise in preterm birth. CDC NCHS Data Brief 525.</div>
+      </div>
+      <div class="stat-tile">
+        <div class="lab">Hialeah mother · model-predicted serum PFOA</div>
+        <div class="num red">~3.2 ng/mL</div>
+        <div class="ctx"><strong>~2.5–3× a typical US woman of childbearing age</strong> (NHANES median 1.2–1.4 ng/mL). Predicted from Andrews &amp; Naidenko 2020 — not measured. PFOA crosses the placenta at a cord:maternal ratio of ~0.87 (Apelberg 2007).</div>
+      </div>
+      <div class="stat-tile">
+        <div class="lab">Global sperm count decline, ongoing</div>
+        <div class="num red">−2.6%<span style="font-size:.4em">/yr</span></div>
+        <div class="ctx">Levine et al. 2023 (Hum Reprod Update, PMID 36377604): global sperm counts down ~52% 1973–2018 with ongoing −2.64%/yr post-2000.</div>
+      </div>
+      <div class="stat-tile">
+        <div class="lab">US IVF cycles 2013 → 2022</div>
+        <div class="num red">+128%</div>
+        <div class="ctx">435,426 ART cycles in 2022. UM Infertility Center reports 49% live birth per cycle in patients under 35. CDC ART National Summary.</div>
+      </div>
+      <div class="stat-tile">
+        <div class="lab">Florida ranks for US birth rate</div>
+        <div class="num">32 of 52</div>
+        <div class="ctx">FL preterm rate 10.7% (2024). FL ranks #32. March of Dimes 2025 Report Card.</div>
+      </div>
+    </div>
+
+    <details>
+      <summary>The Hialeah question · why we can't yet prove the PFAS-fertility link at the ZIP-code level</summary>
+      <div class="body">
+        <p>Hialeah is 95% Hispanic, low-income, and sits directly downgradient of the MIA Airport AFFF plume. If PFAS were driving Miami-Dade reproductive outcomes, Hialeah's numbers should be the worst in the county.</p>
+        <p><strong>Public ZIP-level birth-outcome data for Hialeah is not currently exposed by FLHealthCHARTS or PeriStats in a scrapable form.</strong> Florida CHARTS and Miami-Dade Healthy Start hold the data and require interactive queries (or public-records requests) to extract.</p>
+        <p>What we know from upstream signals: race/income are the dominant correlates of Miami-Dade reproductive outcomes in publicly accessible data — Liberty City and Overtown (Black, NOT downgradient of MIA) show worse maternal/infant health than Hialeah (Hispanic, downgradient of MIA). That doesn't disprove PFAS — it means PFAS is operating on top of a much larger race/income signal, and a confounding-adjusted analysis is needed to detect it.</p>
+        <p>The biomonitoring data the project actually needs is the FDOH PFAS panel cross-referenced with the FBDR hypospadias rate by ZIP and Healthy Start screen results by ZIP. <strong>That data does not yet exist publicly for Miami-Dade.</strong> The absence is itself a public-health data gap worth closing.</p>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- ============================= THE 5 HEADLINE NUMBERS ============================= -->
+<section class="bk">
+  <div class="wrap">
+    <div class="eyeb">The five most damning Miami-Dade numbers · every one cited</div>
+    <h2><strong>Five numbers</strong> a Miami mother should know <em>this week.</em></h2>
+    <p class="lede">Not adjectives. Not estimates. Five specific data points from federal and state sources, each linked to the original document. These are the numbers to discuss with your pediatrician and your OB.</p>
+    <p style="font-size:13.5px;color:var(--stone);font-style:italic;max-width:900px;border-left:2px solid var(--hair);padding:6px 14px;margin-top:0;margin-bottom:20px;line-height:1.55">
+      A note on the two main compounds in your water. <strong style="font-style:normal">PFOA</strong> is the carcinogen of record — IARC Group 1, the same classification as tobacco and asbestos, November 2023. <strong style="font-style:normal">PFOS</strong> is the persistent immune and endocrine disruptor — IARC Group 2B (possibly carcinogenic to humans). Both are regulated at the same 4 ppt federal limit.
+    </p>
+
+    <div class="headlines">
+      <div class="headline">
+        <div class="lab">Childhood cancer (ages 0–14)</div>
+        <div class="big red">+2.2<span style="font-size:.55em">% /yr</span></div>
+        <div class="desc">Miami-Dade childhood cancer is <strong>rising +2.2% per year</strong> while the US rate is <strong>falling −1.2%/yr</strong>. Miami-Dade rate (21.5/100K) is 30% higher than the US (16.6/100K).</div>
+        <div class="src">NCI State Cancer Profiles, 2018–2022 · <a href="https://statecancerprofiles.cancer.gov/incidencerates/index.php?stateFIPS=12&areatype=county&cancer=516&race=00&sex=0&age=016&type=incd" target="_blank">SCP 516</a></div>
+      </div>
+      <div class="headline">
+        <div class="lab">WASD Main System · PFOS (water for 2.4M)</div>
+        <div class="big red">31 ppt</div>
+        <div class="desc">WASD's own 2024 AWQR reports <strong>PFOS 31 ppt</strong> (range 7–31) — <strong>7.75× the federal MCL</strong> — in the Main System serving Hialeah, Doral, Coral Gables, Brickell, Key Biscayne, Pinecrest, and wholesale to Miami Beach. PFOA 16 ppt. Hazard Index 1.1 (peak 1.3) — already over the federal mixture limit.</div>
+        <div class="src">Miami-Dade WASD 2024 AWQR, p. 8–9 · <a href="https://www.miamidade.gov/resources/water/documents/reports/water-quality-2024.pdf" target="_blank">miamidade.gov</a></div>
+      </div>
+      <div class="headline">
+        <div class="lab">Male thyroid cancer · Miami-Dade</div>
+        <div class="big red">+3.4<span style="font-size:.55em">% /yr</span></div>
+        <div class="desc">The steepest sex-specific cancer trend in Miami-Dade. <strong>Male thyroid cancer rising +3.4%/yr</strong> while the US falls −2.1%/yr.</div>
+        <div class="src">NCI State Cancer Profiles, 2018–2022 · <a href="https://statecancerprofiles.cancer.gov/incidencerates/index.php?stateFIPS=12&areatype=county&cancer=080&race=00&sex=1&age=001&type=incd" target="_blank">SCP 080</a></div>
+      </div>
+      <div class="headline">
+        <div class="lab">Broward birthing hospitals · hypertensive disorders of pregnancy</div>
+        <div class="big red">9.4%</div>
+        <div class="desc">Memorial Healthcare System (three Broward birthing hospitals): 9.4% of maternity patients experiencing hypertensive disorders of pregnancy — <strong>more than DOUBLE the 30-year US baseline of 4.2%.</strong> The closest published South Florida proxy for Miami-Dade.</div>
+        <div class="src">Memorial Healthcare System statement, October 2022 · <a href="https://www.cbsnews.com/miami/news/improving-birth-outcomes-for-minority-women/" target="_blank">CBS Miami</a></div>
+      </div>
+      <div class="headline">
+        <div class="lab">Grapeland Heights tap (next to MIA) · total ΣPFAS</div>
+        <div class="big red">242 ppt</div>
+        <div class="desc">Peak peer-reviewed Miami-Dade tap-water reading. Sum of 30 PFAS congeners measured by FIU researchers. <strong>Highest of 21 South Florida taps sampled across Miami-Dade, Broward, and Palm Beach (Li et al., 2022).</strong> Grapeland-site average was 168 ppt across replicate samples.</div>
+        <div class="src">Li, Fatowe, Cui &amp; Quinete, Sci Total Environ 2022 · <a href="https://pubmed.ncbi.nlm.nih.gov/34562756/" target="_blank">PubMed 34562756</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= SEX / HORMONES / APPEARANCE ============================= -->
+<section class="bk">
+  <div class="wrap">
+    <div class="eyeb">What PFAS does to the body that builds itself · peer-reviewed primary literature</div>
+    <h2><strong>Smaller testicles. Lower testosterone. Lower estradiol. Later puberty. Lower bone density.</strong> <em>Documented.</em></h2>
+    <p class="lede">PFAS does not only cause cancer in twenty years. It interferes — measurably, in published cohorts — with the hormones and tissues that build a body and produce a next generation. Every claim below is a real, dated, peer-reviewed paper with a PubMed ID. Every dollar of remediation cost listed earlier on this page is a downstream consequence of these mechanisms.</p>
+
+    <div class="cond-list" style="margin-top:30px">
+
+      <div class="cond-row">
+        <div>
+          <div class="cond-name">Boys exposed in utero · shorter penises · smaller testes · shorter anogenital distance</div>
+          <div class="cond-detail">Veneto, Italy contaminated region · n=212 exposed young men vs 171 controls. Higher PFOS associated with measurably shorter penile length, smaller testicular volume, lower sperm quality, and shortened anogenital distance. The mechanism — androgen-receptor blockade by PFOA — was reproduced in vitro (SPR, gene reporter, nuclear translocation assays). <strong>Di Nisio et al. 2019, J Clin Endocrinol Metab · PMID 30403786.</strong></div>
+        </div>
+        <div class="col-num red" style="font-size:18px;line-height:1.2">↓ penile length<br>↓ AGD<br>↓ testes</div>
+        <div class="cond-trend up">Direct</div>
+        <div><span class="cond-pfas pfas-strong">Strong</span></div>
+      </div>
+
+      <div class="cond-row">
+        <div>
+          <div class="cond-name">Sperm motility &amp; morphology · meta-analysis 2,190 men</div>
+          <div class="cond-detail">Pooled across seven studies. PFOA β = −1.38 on sperm progressive motility (95% CI −2.44 to −0.32). PFNA β = −1.31. In studies n&gt;200, PFNA also degrades sperm morphology. <strong>Wang et al. 2023, Environ Sci Pollut Res Int · PMID 36396760.</strong></div>
+        </div>
+        <div class="col-num red">↓ sperm</div>
+        <div class="cond-trend up">Meta-analysis</div>
+        <div><span class="cond-pfas pfas-strong">Strong</span></div>
+      </div>
+
+      <div class="cond-row">
+        <div>
+          <div class="cond-name">Testosterone in men · 7,506-person meta-analysis</div>
+          <div class="cond-detail">PFOA and PFNA negatively correlate with circulating testosterone in men across 12 studies. Additional cross-sectional NHANES data: U.S. adolescent boys (12–19) with higher PFOS have measurably lower total testosterone. <strong>Bach/Petersen 2024 · Lewis et al. 2015, IJERPH (PMID 26035660).</strong></div>
+        </div>
+        <div class="col-num red">↓ testosterone</div>
+        <div class="cond-trend up">Meta-analysis</div>
+        <div><span class="cond-pfas pfas-strong">Strong</span></div>
+      </div>
+
+      <div class="cond-row">
+        <div>
+          <div class="cond-name">Testicular cancer · the C8 Probable Link finding</div>
+          <div class="cond-detail">Mid-Ohio Valley DuPont exposure zone · n=~32,000 adults · prospective cancer follow-up. Highest-PFOA-quartile men: statistically significant excess of testicular cancer (HR ~1.35 per log-unit increase in cumulative serum PFOA). The legal basis of Dark Waters. <strong>Barry et al. 2013, Environ Health Perspect · PMID 24007715.</strong></div>
+        </div>
+        <div class="col-num red">↑ testicular ca</div>
+        <div class="cond-trend up">C8 Probable Link</div>
+        <div><span class="cond-pfas pfas-strong">Strong</span></div>
+      </div>
+
+      <div class="cond-row">
+        <div>
+          <div class="cond-name">Girls' puberty · later thelarche, later pubarche, later menarche · suppressed estradiol</div>
+          <div class="cond-detail">Bergen Growth Study 2 · n=618 Norwegian girls aged 6–16 with ultrasound-confirmed Tanner staging. Higher PFAS pushed first breast budding, first pubic hair, and first menstruation all to later ages, and suppressed LH, FSH, estrone, and estradiol. Direct evidence PFAS delays female sexual maturation. <strong>Roth et al. 2025, ACS Environ Health.</strong></div>
+        </div>
+        <div class="col-num red">↓ estradiol<br>↑ age at menarche</div>
+        <div class="cond-trend up">Direct</div>
+        <div><span class="cond-pfas pfas-strong">Strong</span></div>
+      </div>
+
+      <div class="cond-row">
+        <div>
+          <div class="cond-name">PCOS · 29,106 women in a town with PFAS in the tap</div>
+          <div class="cond-detail">Ronneby, Sweden · drinking-water contaminated by firefighting foam — the closest published parallel to Doral / Hialeah. High PFAS drinking-water exposure produced elevated PCOS risk (HR&gt;1) and possibly elevated uterine fibroid risk. <strong>Xu et al. 2021, Sci Total Environ.</strong></div>
+        </div>
+        <div class="col-num red">↑ PCOS</div>
+        <div class="cond-trend up">AFFF cohort</div>
+        <div><span class="cond-pfas pfas-mod">Moderate</span></div>
+      </div>
+
+      <div class="cond-row">
+        <div>
+          <div class="cond-name">Endometriosis · case-control nearly doubles per doubling of one PFAS</div>
+          <div class="cond-detail">Granada, Spain ENDEA study · n=42 cases + 90 surgical controls. PFTrDA: OR 1.74 (95% CI 1.11–2.73) per 2× plasma increase. <strong>Rodríguez-Carrillo et al. 2024, Sci Total Environ · PMID 39179042.</strong></div>
+        </div>
+        <div class="col-num red">↑ endometriosis</div>
+        <div class="cond-trend up">Case-control</div>
+        <div><span class="cond-pfas pfas-mod">Moderate</span></div>
+      </div>
+
+      <div class="cond-row">
+        <div>
+          <div class="cond-name">Miscarriage · Danish National Birth Cohort</div>
+          <div class="cond-detail">Nested case-control · 220 miscarriages vs 218 live births · prospectively stored maternal serum. Several PFAS positively associated with miscarriage between gestational weeks 12–22. <strong>Liew et al. 2020, Environ Health Perspect · PMID 32319790.</strong></div>
+        </div>
+        <div class="col-num red">↑ miscarriage</div>
+        <div class="cond-trend up">Cohort</div>
+        <div><span class="cond-pfas pfas-mod">Moderate</span></div>
+      </div>
+
+      <div class="cond-row">
+        <div>
+          <div class="cond-name">Thyroid disruption · 16 PFAS × 5 hormones meta-analysis</div>
+          <div class="cond-detail">Dose-dependent disruption of TSH, TT3, TT4, FT3, FT4 in pregnant women, adolescents, and adults across pooled cohorts. Hill-model dose-response established. Mechanism: HPT-axis disruption plus direct thyroid-receptor binding. <strong>Du et al. 2024, Sci Total Environ · PMID 39233077.</strong></div>
+        </div>
+        <div class="col-num red">↕ thyroid</div>
+        <div class="cond-trend up">Meta-analysis</div>
+        <div><span class="cond-pfas pfas-strong">Strong</span></div>
+      </div>
+
+      <div class="cond-row">
+        <div>
+          <div class="cond-name">Thyroid cancer · 2024 systematic review and meta-analysis</div>
+          <div class="cond-detail">Positive pooled signal for PFOA and total PFAS exposure with papillary thyroid cancer. <strong>Boyd et al. 2024, Mol Cell Endocrinol · PMID 39047923.</strong></div>
+        </div>
+        <div class="col-num red">↑ thyroid ca</div>
+        <div class="cond-trend up">Meta-analysis</div>
+        <div><span class="cond-pfas pfas-strong">Strong</span></div>
+      </div>
+
+      <div class="cond-row">
+        <div>
+          <div class="cond-name">Osteoporosis &amp; lower bone density · NHANES American women</div>
+          <div class="cond-detail">N=1,914 NHANES adults. Postmenopausal women with higher PFOS, PFOA, PFHxS, PFNA: measurably lower femoral, femoral-neck, and lumbar BMD; significantly higher osteoporosis prevalence. Adolescent girls 12–19 also show lower BMD during peak bone-mass window. <strong>Khalil et al. 2016, EHP · PMID 26058082.</strong></div>
+        </div>
+        <div class="col-num red">↓ bone density</div>
+        <div class="cond-trend up">NHANES</div>
+        <div><span class="cond-pfas pfas-strong">Strong</span></div>
+      </div>
+
+      <div class="cond-row">
+        <div>
+          <div class="cond-name">IGF-1 · the master growth hormone for height · suppressed in C8 kids</div>
+          <div class="cond-detail">N=2,292 children from the C8 PFOA-exposed Mid-Ohio Valley community. Higher PFOA significantly associated with lower IGF-1 — the hormone that drives skeletal growth and final adult height. <strong>Lopez-Espinosa et al. 2016, EHP · PMC4977043.</strong></div>
+        </div>
+        <div class="col-num red">↓ IGF-1</div>
+        <div class="cond-trend up">C8 cohort</div>
+        <div><span class="cond-pfas pfas-strong">Strong</span></div>
+      </div>
+
+      <div class="cond-row">
+        <div>
+          <div class="cond-name">Atopic dermatitis (eczema) in babies of PFAS-exposed mothers</div>
+          <div class="cond-detail">Shanghai Birth Cohort · 687 mother-child pairs · 25% developed AD by 24 months. In girls, prenatal PFOA = 2.1× AD risk, PFNA = 2.22× AD risk. <strong>Chen et al. 2018, Environ Health · PMCID PMC5773146.</strong></div>
+        </div>
+        <div class="col-num red">↑ eczema</div>
+        <div class="cond-trend up">Cohort</div>
+        <div><span class="cond-pfas pfas-mod">Moderate</span></div>
+      </div>
+
+      <div class="cond-row">
+        <div>
+          <div class="cond-name">Anogenital distance disruption · Faroese boys</div>
+          <div class="cond-detail">N=463 mother-infant pairs. Higher maternal PFOA, PFOS, PFNA, PFDA in pregnancy: altered AGD in boys at age 5 (the sentinel marker of fetal androgen exposure that predicts later sperm count and testicular function). <strong>Lind et al. 2021, Reprod Toxicol · PMID 34174373.</strong></div>
+        </div>
+        <div class="col-num red">↕ AGD</div>
+        <div class="cond-trend up">Birth cohort</div>
+        <div><span class="cond-pfas pfas-mod">Moderate</span></div>
+      </div>
+
+    </div>
+
+    <details style="margin-top:32px">
+      <summary>What the literature does NOT yet show — our honest list of unproven claims</summary>
+      <div class="body">
+        <p>The PFAS body-effects literature is large and growing, but several claims that circulate informally are not yet supported by peer-reviewed primary human studies, and Project Miami will not make them:</p>
+        <ul>
+          <li><strong>PFAS does not have a published human peer-reviewed link to hair loss or alopecia.</strong> Hair appears in the PFAS literature only as a measurement matrix (PFAS detected in hair), not as an outcome.</li>
+          <li><strong>PFAS does not have a published human peer-reviewed link to acne.</strong> Chloracne is associated with dioxins and PCBs, which are chemically different from PFAS — do not conflate.</li>
+          <li><strong>PFAS does not cause dental fluorosis.</strong> PFAS contains carbon-fluorine bonds but these are not bioavailable as free fluoride; dental fluorosis is a free-fluoride phenomenon. Chemically wrong.</li>
+          <li><strong>No peer-reviewed PFAS → erectile dysfunction cohort study has been published.</strong> Lower testosterone is documented (above), so the mechanism is plausible — but the direct outcome has not been studied.</li>
+          <li><strong>No primary human studies on PFAS &amp; facial bone development, beard growth, voice changes, or muscle mass.</strong> These are inferable indirectly via testosterone suppression but not directly studied.</li>
+        </ul>
+        <p style="margin-top:14px;font-style:italic;color:var(--stone)">This is the literature as it stands in 2026. We expect each of these gaps will close over the next ten years. Until then, Project Miami stays inside what has been published.</p>
+      </div>
+    </details>
+
+  </div>
+</section>
+
+<!-- ============================= CONDITIONS RISING ============================= -->
+<section class="bk">
+  <div class="wrap">
+    <div class="eyeb">The conditions PFAS is documented to cause — rising in Miami-Dade</div>
+    <h2><strong>10 of 13</strong> conditions PFAS is biologically associated with <em>are rising in Miami-Dade.</em></h2>
+    <p class="lede">If chronic exposure to forever chemicals were producing the harms EPA documents, we would expect to see them rising in Miami-Dade. The data is consistent with that pattern. Every condition below has its Miami-Dade or Florida-proxy rate, the trend slope, and how strongly the peer-reviewed literature ties it to PFAS — <strong>Strong</strong> (IARC, C8 Science Panel, EPA-recognized links), <strong>Moderate</strong> (consistent epidemiology, causation contested), <strong>Emerging</strong> (biologically plausible, signal in some cohorts, not established).</p>
+
+    <div class="cond-list">
+
+      <div class="cond-row">
+        <div>
+          <div class="cond-name">Pediatric thyroid cancer</div>
+          <div class="cond-detail">US slope accelerated from +0.8%/yr (1975–95) to <strong>+4.6%/yr (1996–2016)</strong>. <strong>South Florida is one of only two statistically significant adolescent and young adult (ages 15–39) thyroid cancer clusters</strong> in the state (Amin et al. 2014, BioMed Res Int; PMID 24868551).</div>
+        </div>
+        <div class="col-num red">+4.6<span style="font-size:.55em">%/yr</span></div>
+        <div class="cond-trend up">↑ Steep</div>
+        <div><span class="cond-pfas pfas-strong">Strong</span></div>
+      </div>
+
+      <div class="cond-row">
+        <div>
+          <div class="cond-name">Male thyroid cancer · Miami-Dade adults</div>
+          <div class="cond-detail">Miami-Dade <strong>+3.4%/yr</strong> while US falls −2.1%/yr. Miami-Dade female thyroid rate is <strong>#1 of 61 Florida counties</strong> at 27.0/100K. The mechanism: PFAS displaces thyroid hormone from transthyretin.</div>
+        </div>
+        <div class="col-num red">+3.4<span style="font-size:.55em">%/yr</span></div>
+        <div class="cond-trend up">↑ Rising</div>
+        <div><span class="cond-pfas pfas-strong">Strong</span></div>
+      </div>
+
+      <div class="cond-row">
+        <div>
+          <div class="cond-name">Childhood cancer (ages 0–14, all sites)</div>
+          <div class="cond-detail">Miami-Dade <strong>21.5/100K — 30% higher than US (16.6)</strong>. Rising +2.2%/yr while US is falling. Miami-Dade ranks #5 of 61 Florida counties.</div>
+        </div>
+        <div class="col-num red">+2.2<span style="font-size:.55em">%/yr</span></div>
+        <div class="cond-trend up">↑ Rising</div>
+        <div><span class="cond-pfas pfas-strong">Strong</span></div>
+      </div>
+
+      <div class="cond-row">
+        <div>
+          <div class="cond-name">Kidney cancer (PFOA — IARC Group 1)</div>
+          <div class="cond-detail">Miami-Dade <strong>+1.3%/yr</strong>, US falling −1.0%/yr — a 2.3-percentage-point divergence. PFOA is a Group 1 (proven human) carcinogen, IARC November 2023.</div>
+        </div>
+        <div class="col-num red">+1.3<span style="font-size:.55em">%/yr</span></div>
+        <div class="cond-trend up">↑ Rising</div>
+        <div><span class="cond-pfas pfas-strong">Strong</span></div>
+      </div>
+
+      <div class="cond-row">
+        <div>
+          <div class="cond-name">Testicular cancer in Hispanic men (US, applicable to Miami-Dade)</div>
+          <div class="cond-detail">US Hispanic-male incidence rising <strong>+3.03%/yr</strong> with younger median age at diagnosis (29 yrs vs 35 for non-Hispanic white). Miami-Dade is 69% Hispanic, the highest share of any large US county, making Miami-Dade the population most exposed to the trend. (Direct Miami-Dade testicular incidence trend not separately reported by NCI State Cancer Profiles.)</div>
+        </div>
+        <div class="col-num red">+3.0<span style="font-size:.55em">%/yr</span></div>
+        <div class="cond-trend up">↑ Rising</div>
+        <div><span class="cond-pfas pfas-strong">Strong</span></div>
+      </div>
+
+      <div class="cond-row">
+        <div>
+          <div class="cond-name">Hypertensive disorders of pregnancy · Broward (South FL proxy)</div>
+          <div class="cond-detail">Memorial Healthcare System (three Broward birthing hospitals), October 2022: <strong>9.4% of maternity patients</strong> with hypertensive disorders of pregnancy — more than double the 30-year US baseline of 4.2%. PFAS pregnancy-induced hypertension is a C8 Science Panel Probable Link. Comparable Miami-Dade hospital data has not been published.</div>
+        </div>
+        <div class="col-num red">9.4%</div>
+        <div class="cond-trend up">2× US</div>
+        <div><span class="cond-pfas pfas-strong">Strong</span></div>
+      </div>
+
+      <div class="cond-row">
+        <div>
+          <div class="cond-name">Florida hypospadias rate</div>
+          <div class="cond-detail">Florida <strong>72.7 per 10,000 male live births</strong> (2017–21) — well above the US NBDPS baseline of ~34/10,000. PFAS endocrine disruption is one of several biologically plausible mechanisms; the published PFAS-hypospadias literature is sparse and largely null (Toft 2016 Danish amniotic-fluid cohort — null for hypospadias but did show suppressed fetal Leydig-cell function, the cells that masculinize the fetus).</div>
+        </div>
+        <div class="col-num red">72.7</div>
+        <div class="cond-trend up">Elevated</div>
+        <div><span class="cond-pfas pfas-mod">Moderate</span></div>
+      </div>
+
+      <div class="cond-row">
+        <div>
+          <div class="cond-name">Pediatric NAFLD / MASLD</div>
+          <div class="cond-detail">US adolescent (12–21): <strong>8.54% (1999–2004) → 11.8% (2011–2016)</strong> — +38% relative increase. Hispanic-skewed. Jin et al. 2020 (Environ Int, PMID 31744629) link PFOS and PFHxS to biopsy-confirmed NAFLD severity in 74 children (51% Hispanic).</div>
+        </div>
+        <div class="col-num red">+0.27<span style="font-size:.55em">pp/yr</span></div>
+        <div class="cond-trend up">↑ Rising</div>
+        <div><span class="cond-pfas pfas-mod">Moderate</span></div>
+      </div>
+
+      <div class="cond-row">
+        <div>
+          <div class="cond-name">Pediatric Type 1 diabetes</div>
+          <div class="cond-detail">OneFlorida+ network (UM/Jackson Health backbone, n=331,641 pediatric records): <strong>significant rise post-March 2020</strong>. PFAS immune disruption is one of several proposed mechanisms; the leading hypotheses in the literature are post-COVID immune dysregulation and viral triggering.</div>
+        </div>
+        <div class="col-num red">Significant</div>
+        <div class="cond-trend up">↑ Post-2020</div>
+        <div><span class="cond-pfas pfas-em">Emerging</span></div>
+      </div>
+
+      <div class="cond-row">
+        <div>
+          <div class="cond-name">US autism prevalence · 16-site ADDM network</div>
+          <div class="cond-detail">CDC ADDM 2022: <strong>1 in 31 US 8-year-olds</strong> across the 16-site network (Florida is not a tracked site). Prevalence trajectory: 1 in 150 (2000) → 1 in 36 (2020) → 1 in 31 (2022). Prenatal PFAS → neurodevelopmental delay documented in multiple prospective cohorts (Oulhote, Vuong, Skogheim); causal evidence remains emerging.</div>
+        </div>
+        <div class="col-num red">1 in 31</div>
+        <div class="cond-trend up">↑ 1:150 → 1:31</div>
+        <div><span class="cond-pfas pfas-em">Emerging</span></div>
+      </div>
+
+      <div class="cond-row">
+        <div>
+          <div class="cond-name">Pediatric asthma · Miami-Dade</div>
+          <div class="cond-detail">Miami-Dade ED visit rate <strong>rose 29%</strong> from 106.8/10K (2006–2008) to 138.2/10K (2011–2013) and plateaued at the elevated rate while national pediatric asthma declined. African-American children 27.9%, Hispanic 20.9%, White 12.6%. PFAS-asthma epidemiology is consistent but mixed (Humblet 2014, Qin 2017 positive; Smit 2015 null).</div>
+        </div>
+        <div class="col-num red">21.3%</div>
+        <div class="cond-trend up">↑ Plateaued</div>
+        <div><span class="cond-pfas pfas-mod">Moderate</span></div>
+      </div>
+
+      <div class="cond-row">
+        <div>
+          <div class="cond-name">Late-stage prostate cancer · Miami-Dade</div>
+          <div class="cond-detail">Miami-Dade late-stage prostate rate <strong>28.2/100K</strong> — exceeds both FL (22.5) and US (26.0). <strong>24.7% of Miami-Dade prostate cancers present at distant/late stage</strong>. The Endocrine Society 2024 EDC report identifies PFAS as endocrine disruptors associated with prostate, kidney, testicular, and ovarian cancers.</div>
+        </div>
+        <div class="col-num red">24.7%</div>
+        <div class="cond-trend up">Elevated</div>
+        <div><span class="cond-pfas pfas-mod">Moderate</span></div>
+      </div>
+
+      <div class="cond-row">
+        <div>
+          <div class="cond-name">Infant mortality · Miami-Dade</div>
+          <div class="cond-detail">Miami-Dade infant mortality <strong>rose ~9%</strong> from 2013 to 2023 (≈ 5.4 → 5.9 per 1,000 live births) while US IMR remained near 5.6 per 1,000. Leading causes include congenital malformations and preterm/LBW disorders — biologically consistent with prenatal PFAS mechanisms, but no published meta-analysis directly links PFAS to infant mortality.</div>
+        </div>
+        <div class="col-num red">+9%</div>
+        <div class="cond-trend up">↑ 10-yr</div>
+        <div><span class="cond-pfas pfas-em">Emerging</span></div>
+      </div>
+
+    </div>
+
+    <details>
+      <summary>The cluster pattern: what 13 conditions together tell us</summary>
+      <div class="body">
+        <p>If chronic PFAS exposure were producing harm in Miami-Dade, the bioaccumulation hypothesis predicts a <strong>cluster of simultaneous rises across immune, endocrine, metabolic, and developmental axes</strong> — not a single signal.</p>
+        <p>Of 13 tracked conditions: <strong>10 are clearly rising</strong>, 2 are mixed, 1 is flat, 0 are declining. <strong>The four conditions with the strongest peer-reviewed PFAS mechanism in the population (pediatric and adult thyroid cancer, kidney cancer, testicular cancer, hypertensive disorders of pregnancy) all show rises.</strong></p>
+        <p>This is the shape of a population under chronic environmental exposure. It is not proof of causation — Hispanic genetic susceptibility, the obesity epidemic, post-COVID inflection, and screening intensification are real confounders. But the pattern is consistent with what the PFAS literature predicts.</p>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- ============================= WATER BY UTILITY ============================= -->
+<section class="bk alt">
+  <div class="wrap">
+    <div class="eyeb">The water · ranked by total PFAS · finished water in your tap</div>
+    <h2>Every Miami-Dade utility <strong>exceeds the federal limit</strong> for PFOA or PFOS.</h2>
+    <p class="lede">The April 2024 EPA federal limits are 4 parts per trillion for PFOA and 4 parts per trillion for PFOS. The "Multiple of MCL" column shows by how much each utility exceeds it. Source for every reading is in the right column.</p>
+    <p style="font-size:13.5px;color:var(--stone);font-style:italic;max-width:900px;border-left:2px solid var(--hair);padding:6px 14px;margin-top:12px;line-height:1.55">
+      Regulatory status as of May 18, 2026: the EPA PFOA and PFOS 4-ppt MCLs remain in effect. EPA has formally proposed (a) to extend the utility compliance deadline from 2029 to 2031, and (b) to rescind the separate MCLs for PFHxS, PFNA, HFPO-DA, and the four-compound Hazard Index. The numbers below are the readings utilities have already published; the legal compliance timeline is the subject of EPA's open rulemaking. Source: EPA PFAS NPDWR page.
+    </p>
+
+    <p style="font-size:14px;color:var(--stone);font-style:italic;max-width:900px;border-left:2px solid var(--hair);padding:6px 14px;line-height:1.55;margin-bottom:18px">
+      Every number below is pulled directly from the utility's own 2024 Annual Water Quality Report — Miami-Dade WASD's 24-page report, the City of Miami Beach's 2024 AWQR (published December 2025), and NMB Water's 2024 AWQR. Where the utilities disagree with each other on the same source water, we show both readings.
+    </p>
+    <table class="water">
+      <thead>
+        <tr>
+          <th>Utility / subsystem</th>
+          <th>PFOA (4 ppt MCL)</th>
+          <th>PFOS (4 ppt MCL)</th>
+          <th>Hazard Index (MCL 1.0)</th>
+          <th>Source</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background:#fff5f5">
+          <td><div class="util">WASD · Main System</div><div class="pwsid">PWSID FL4130871 · finished water for most of Miami-Dade — incl. Hialeah, Doral, Coral Gables, Pinecrest, Kendall, Brickell, Key Biscayne, and the wholesale supply to Miami Beach. Serves 2.4M people.</div></td>
+          <td><span class="ppt red">16 ppt</span><div class="multiple">4× MCL · range 3–16</div></td>
+          <td><span class="ppt red">31 ppt</span><div class="multiple">7.75× MCL · range 7–31</div></td>
+          <td><span style="font-size:24px;font-weight:700;color:var(--red);font-family:var(--serif)">1.1</span><div class="multiple"><strong style="color:var(--red)">peak 1.3 — over the federal MCL</strong></div></td>
+          <td><a href="https://www.miamidade.gov/resources/water/documents/reports/water-quality-2024.pdf" target="_blank">WASD 2024 AWQR, p. 8–9</a></td>
+        </tr>
+        <tr>
+          <td><div class="util">WASD · South Dade Water Supply</div><div class="pwsid">PWSID FL4130871 subsystem · Homestead, Florida City, deep south Miami-Dade</div></td>
+          <td><span class="ppt red">11 ppt</span><div class="multiple">2.75× MCL · range ND–11</div></td>
+          <td><span class="ppt red">35 ppt</span><div class="multiple">8.75× MCL · range 15–35</div></td>
+          <td><span style="font-size:22px;font-weight:700;color:var(--ink);font-family:var(--serif)">0.4</span><div class="multiple">below MCL</div></td>
+          <td><a href="https://www.miamidade.gov/resources/water/documents/reports/water-quality-2024.pdf" target="_blank">WASD 2024 AWQR, p. 8–9</a></td>
+        </tr>
+        <tr>
+          <td><div class="util">WASD · REDAVO subsystem (Aventura)</div><div class="pwsid">PWSID FL4130871 subsystem · Aventura</div></td>
+          <td><span class="ppt red">1.6 ppt</span><div class="multiple">below MCL · range 0.5–1.6</div></td>
+          <td><span class="ppt red">35 ppt</span><div class="multiple">8.75× MCL · range 19–35</div></td>
+          <td><span style="font-size:22px;font-weight:700;color:var(--ink);font-family:var(--serif)">N/A</span></td>
+          <td><a href="https://www.miamidade.gov/resources/water/documents/reports/water-quality-2024.pdf" target="_blank">WASD 2024 AWQR, p. 8–9</a></td>
+        </tr>
+        <tr style="background:#fff5f5">
+          <td><div class="util">City of Miami Beach</div><div class="pwsid">PWSID FL4130901 · 100% wholesale-supplied by WASD (no independent treatment). MB's own AWQR reports HIGHER PFAS than WASD's report shows for the same source water.</div></td>
+          <td><span class="ppt red">30 ppt</span><div class="multiple"><strong style="color:var(--red)">7.5× MCL</strong> · range ND–30</div></td>
+          <td><span class="ppt red">38 ppt</span><div class="multiple"><strong style="color:var(--red)">9.5× MCL</strong> · range ND–38</div></td>
+          <td><span style="font-size:22px;font-weight:700;color:var(--stone);font-family:var(--serif)">not reported</span></td>
+          <td><a href="https://www.miamibeachfl.gov/wp-content/uploads/2025/12/MB-2024-Water-Quality-Report.pdf" target="_blank">Miami Beach 2024 AWQR, p. 8 (Dec 2025)</a></td>
+        </tr>
+        <tr style="background:#fff5f5">
+          <td><div class="util">NMB Water (North Miami Beach)</div><div class="pwsid">PWSID FL4131618 · ZIPs 33160, 33162, 33179, 33169 · independent utility (NOT WASD wholesale)</div></td>
+          <td><span class="ppt red">5.3 ppt</span><div class="multiple">1.3× MCL · range 1.5–5.3</div></td>
+          <td><span class="ppt red">20 ppt</span><div class="multiple">5.0× MCL · peak 35 ppt</div></td>
+          <td><span style="font-size:24px;font-weight:700;color:var(--red);font-family:var(--serif)">2.5</span><div class="multiple"><strong style="color:var(--red)">peak 3.0 — 3× MCL</strong></div></td>
+          <td><a href="https://www.citynmb.com/905/Water-Quality-Reports" target="_blank">NMB Water 2024 AWQR</a></td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:13.5px;color:var(--stone);font-style:italic;max-width:900px;border-left:2px solid var(--hair);padding:6px 14px;line-height:1.55;margin-top:18px">
+      The <strong style="font-style:normal">Hazard Index</strong> is EPA's combined measure for four co-occurring PFAS (PFHxS, PFNA, HFPO-DA, PFBS). The federal MCL for the Hazard Index is 1.0 — any reading above 1.0 means the mixture, in combination, exceeds the level EPA considers safe. WASD Main System reports a Hazard Index of 1.1 with a peak of 1.3 — over the federal limit. NMB Water reports an average Hazard Index of 2.5 with a peak of 3.0 — triple the federal limit, the single most extreme published reading by any Miami-Dade utility. The <strong style="font-style:normal">Miami Beach vs WASD discrepancy</strong> — Miami Beach's December-2025 AWQR shows PFOS 38 ppt and PFOA 30 ppt for the same wholesale water that WASD's own AWQR reports as 31 and 16 — is a real, citable inconsistency between two utilities' published numbers. Both utilities sampled the same Biscayne Aquifer source water in 2024. EPA proposed in May 2026 to rescind the Hazard Index and the individual MCLs for PFHxS, PFNA, and HFPO-DA; the PFOA and PFOS 4-ppt MCLs remain.
+    </p>
+
+    <details>
+      <summary>Where is the PFAS coming from? Every Florida airport · every military base · the same chemistry</summary>
+      <div class="body">
+        <p>PFAS in South Florida tap water originates upstream — in the groundwater that feeds the Biscayne Aquifer. The dominant source is <strong>aqueous film-forming foam (AFFF)</strong>, used by every FAA Part 139 airport and every military airfield to suppress jet-fuel fires since the 1970s. Every facility that used AFFF for decades shows PFAS in groundwater at multiples of 1,000× to 1,000,000× the federal drinking-water MCL of 4 ppt.</p>
+        <p>Ranked peak documented PFAS in Florida AFFF source-site groundwater (not drinking water — these are plume readings at the source):</p>
+        <table style="width:100%;border-collapse:collapse;margin:18px 0;font-size:14px">
+          <thead><tr style="border-bottom:1px solid var(--ink);text-align:left">
+            <th style="padding:8px 12px 8px 0">Site</th>
+            <th style="padding:8px 12px">County</th>
+            <th style="padding:8px 12px;text-align:right">Peak GW PFAS (ppt)</th>
+            <th style="padding:8px 12px;text-align:right">× MCL</th>
+          </tr></thead>
+          <tbody>
+            <tr style="border-bottom:1px solid var(--hair)"><td style="padding:8px 12px 8px 0">Patrick Space Force Base</td><td style="padding:8px 12px">Brevard (Cocoa Beach)</td><td style="padding:8px 12px;text-align:right;color:var(--red);font-weight:600">~4,300,000</td><td style="padding:8px 12px;text-align:right">1,075,000×</td></tr>
+            <tr style="border-bottom:1px solid var(--hair)"><td style="padding:8px 12px 8px 0">NAS Pensacola · Saufley Field</td><td style="padding:8px 12px">Escambia</td><td style="padding:8px 12px;text-align:right;color:var(--red);font-weight:600">~4,300,000</td><td style="padding:8px 12px;text-align:right">1,075,000×</td></tr>
+            <tr style="border-bottom:1px solid var(--hair)"><td style="padding:8px 12px 8px 0">NAS Jacksonville</td><td style="padding:8px 12px">Duval</td><td style="padding:8px 12px;text-align:right;color:var(--red);font-weight:600">~1,397,000</td><td style="padding:8px 12px;text-align:right">349,250×</td></tr>
+            <tr style="border-bottom:1px solid var(--hair)"><td style="padding:8px 12px 8px 0">NAS Cecil Field (former, Superfund)</td><td style="padding:8px 12px">Duval</td><td style="padding:8px 12px;text-align:right;color:var(--red);font-weight:600">~980,000 (PFOS)</td><td style="padding:8px 12px;text-align:right">245,000×</td></tr>
+            <tr style="border-bottom:1px solid var(--hair)"><td style="padding:8px 12px 8px 0">Tyndall AFB</td><td style="padding:8px 12px">Bay (Panama City)</td><td style="padding:8px 12px;text-align:right;color:var(--red);font-weight:600">~902,000</td><td style="padding:8px 12px;text-align:right">225,500×</td></tr>
+            <tr style="border-bottom:1px solid var(--hair)"><td style="padding:8px 12px 8px 0">Eglin AFB</td><td style="padding:8px 12px">Okaloosa</td><td style="padding:8px 12px;text-align:right;color:var(--red);font-weight:600">~560,000</td><td style="padding:8px 12px;text-align:right">140,000×</td></tr>
+            <tr style="border-bottom:1px solid var(--hair)"><td style="padding:8px 12px 8px 0">MacDill AFB</td><td style="padding:8px 12px">Hillsborough (Tampa)</td><td style="padding:8px 12px;text-align:right;color:var(--red);font-weight:600">~523,000</td><td style="padding:8px 12px;text-align:right">130,750×</td></tr>
+            <tr style="background:#fff5f5;border-bottom:1px solid var(--hair)"><td style="padding:8px 12px 8px 0"><strong>Miami-Dade College Fire Academy (3180 NW 119th St., Opa-locka)</strong></td><td style="padding:8px 12px">Miami-Dade</td><td style="padding:8px 12px;text-align:right;color:var(--red);font-weight:600">800 – 26,100</td><td style="padding:8px 12px;text-align:right">up to 6,525×</td></tr>
+            <tr style="background:#fff5f5;border-bottom:1px solid var(--hair)"><td style="padding:8px 12px 8px 0"><strong>Miami-Dade Fire Rescue · Doral facility (9300 NW 41st St.)</strong></td><td style="padding:8px 12px">Miami-Dade</td><td style="padding:8px 12px;text-align:right;color:var(--red);font-weight:600">PFOA + PFOS over GCTL (specific ppt not yet released)</td><td style="padding:8px 12px;text-align:right">FDEP cleanup site</td></tr>
+            <tr style="background:#fff5f5;border-bottom:1px solid var(--hair)"><td style="padding:8px 12px 8px 0"><strong>WASD Miami Springs golf-course wells (PFAS-positive wellfield supplying Hialeah/Preston)</strong></td><td style="padding:8px 12px">Miami-Dade</td><td style="padding:8px 12px;text-align:right;color:var(--red);font-weight:600">184 / 182 / 124 (combined PFOA+PFOS)</td><td style="padding:8px 12px;text-align:right">2.6× HAL · offline Aug 2019</td></tr>
+            <tr style="border-bottom:1px solid var(--hair)"><td style="padding:8px 12px 8px 0">Homestead Air Reserve Base</td><td style="padding:8px 12px">Miami-Dade</td><td style="padding:8px 12px;text-align:right;color:var(--red);font-weight:600">&gt;20 (banded; full SI not yet public)</td><td style="padding:8px 12px;text-align:right">&gt;5×</td></tr>
+          </tbody>
+        </table>
+        <p style="margin-top:18px"><strong>What about Fort Lauderdale-Hollywood (FLL) and Palm Beach International (PBI)?</strong> Civilian airports are outside the DOD's PFAS reporting regime and Florida DEP's airport-specific investigations are still in early stages — so neither facility has a publicly released on-airport monitoring well number. But the downgradient evidence is unmistakable:</p>
+        <ul>
+          <li><strong>FLL → Dania Beach tap water: 124 ppt total ΣPFAS</strong> — the second-highest of 21 South Florida taps in the FIU/Quinete study (Li et al. 2022). Dania Beach pulls from the wellfield 1–2 miles downgradient of FLL, in the same Biscayne Aquifer system.</li>
+          <li><strong>PBI is identified by multiple sources as the dominant local PFAS source for Palm Beach County drinking water</strong>, sitting inside the Palm Beach County Wellfield Protection Zone — but no on-airport ppt number has been published.</li>
+          <li><strong>Hollywood, Hallandale Beach, Dania Beach, and Sunrise (all in Broward) received a combined ~$35 M in 2025 AFFF MDL settlements</strong> — i.e., the utilities themselves have legally asserted airport AFFF as the source of the PFAS in their finished water.</li>
+          <li><strong>MIA-area tap water (2013):</strong> 47 ppt PFOS measured in Miami-Dade wells closest to MIA. Miami Beach (2014): 58 ppt PFOS.</li>
+        </ul>
+        <p>The pattern is consistent across the state: every major airport and every military airfield used AFFF for fifty years; every one of them is now a documented or presumed plume source for the shallow aquifer underneath; every downgradient utility — including all four serving Miami-Dade — exceeds the April 2024 federal MCL today.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>How does this translate to PFAS in your blood? (Model-predicted)</summary>
+      <div class="body">
+        <p>The peer-reviewed exposure-to-serum coefficient (Andrews &amp; Naidenko, 2020, derived from C8 Science Panel pharmacokinetics) is approximately <strong>0.14 ng/mL of serum PFOA per 1 ppt of PFOA in drinking water</strong>, at steady state with 5+ years of exposure. The number that follows is a <em>model prediction</em>, not a measurement.</p>
+        <p>For a Hialeah mother (16 ppt PFOA, 31 ppt PFOS) living there 5+ years:</p>
+        <ul>
+          <li><strong>Model-predicted serum PFOA uplift:</strong> ~2.2 ng/mL above the national female childbearing-age median of ~1.2–1.4 ng/mL (NHANES 2017–2020) — predicted total roughly <strong>2.5–3× a typical US woman of childbearing age</strong>.</li>
+          <li><strong>Model-predicted serum PFOS uplift:</strong> ~4–6 ng/mL above the national baseline of ~3 ng/mL — predicted total roughly <strong>2–3× a typical US woman.</strong></li>
+        </ul>
+        <p>NASEM's 2022 clinical guidance recommends additional clinical follow-up when the <strong>sum of seven PFAS in serum</strong> reaches 2 ng/mL, and enhanced follow-up at 20 ng/mL. A Hialeah mother's model-predicted sum across these two congeners alone is ≈ 8–11 ng/mL — already inside the bracket NASEM names. The point of this calculation is decision-relevance: it is a number worth asking your physician to actually measure, not assume.</p>
+        <p><em>Source: NASEM 2022 · Andrews &amp; Naidenko 2020 (EST Letters) · CDC NHANES 2017–2020.</em></p>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- ============================= MIAMI PFAS POLLUTERS ============================= -->
+<section class="bk">
+  <div class="wrap">
+    <div class="eyeb">The Miami polluters · named · addressed · documented</div>
+    <h2>The polluters that put PFAS in your aquifer have <strong>names and addresses.</strong></h2>
+    <p class="lede">Florida DEP has assessed 26 fire training facilities statewide for PFAS. Four of those are in Miami-Dade. <strong>All four came back positive.</strong> They are not the only sources — every Part 139 airport, every military airfield, ten Biscayne Aquifer Superfund sites, and the entire Northwest Wellfield zone of contribution carry documented or presumed PFAS. The list below is built from Florida DEP site assessment reports, EPA Superfund records, the DOD installation list, and federal court filings — primary documents only.</p>
+
+    <h3 style="font-family:var(--serif);font-size:22px;margin-top:36px;letter-spacing:-.01em;color:var(--ink)">The four confirmed Miami-Dade fire-training PFAS sites</h3>
+    <p style="font-size:14px;color:var(--stone);margin-bottom:18px">Florida DEP Preliminary Site Assessments. Every reading is in soil + groundwater, not drinking water — these are plume-source readings at the AFFF training facilities themselves.</p>
+    <table class="water">
+      <thead>
+        <tr>
+          <th>Facility</th>
+          <th>Address</th>
+          <th>Documented PFAS</th>
+          <th>Source</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background:#fff5f5">
+          <td><div class="util">Miami-Dade College Fire Academy</div><div class="pwsid">a/k/a Miami-Dade Academy of Fire Science · operates AFFF weekly · ~70 employees + 300+ trainees/yr</div></td>
+          <td><div class="util">3180 NW 119th St., Opa-locka</div></td>
+          <td><span class="ppt red">800 – 26,100 ppt</span><div class="multiple">total ΣPFAS · 10 monitor wells over Florida GCTL</div></td>
+          <td><a href="https://floridadep.gov/waste/waste-cleanup/content/miami-dade-academy-fire-science" target="_blank">FL DEP site page</a></td>
+        </tr>
+        <tr style="background:#fff5f5">
+          <td><div class="util">Miami-Dade Fire Rescue HQ</div><div class="pwsid">Inside Northwest Wellfield zone of contribution — the wellfield supplying ~150 MGD to WASD customers</div></td>
+          <td><div class="util">9300 NW 41st St., Doral</div></td>
+          <td><span class="ppt red">over GCTL</span><div class="multiple">soil + groundwater PFOA + PFOS · Jan 2020 lab results</div></td>
+          <td><a href="https://floridadep.gov/waste/waste-cleanup/content/miami-dade-fire-rescue" target="_blank">FL DEP site page</a></td>
+        </tr>
+        <tr style="background:#fff5f5">
+          <td><div class="util">City of Miami Fire Rescue Training Center</div><div class="pwsid">Built on top of the segregation-era Old Smokey incinerator ash field — PFAS layered on dioxin, arsenic, lead</div></td>
+          <td><div class="util">Jefferson St. &amp; Washington Ave., West Coconut Grove</div></td>
+          <td><span class="ppt red">over GCTL</span><div class="multiple">soil + groundwater PFOA + PFOS</div></td>
+          <td><a href="https://floridadep.gov/waste/waste-cleanup/content/city-miami-fire-rescue-training-center" target="_blank">FL DEP site page</a></td>
+        </tr>
+        <tr style="background:#fff5f5">
+          <td><div class="util">City of Hialeah Training Facility</div><div class="pwsid">City of Hialeah itself retained AFFF MDL counsel in May 2023 — victim and contributor</div></td>
+          <td><div class="util">City of Hialeah Training Facility · over Hialeah/Miami Springs wellfield ZOC</div></td>
+          <td><span class="ppt red">over GCTL</span><div class="multiple">soil + groundwater PFOA + PFOS</div></td>
+          <td><a href="https://floridadep.gov/waste/waste-cleanup/content/city-hialeah-training-facility" target="_blank">FL DEP site page</a></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <details style="margin-top:32px">
+      <summary>The full Miami-Dade PFAS polluter inventory · 20+ sites · airports, Superfund, landfills, industrial</summary>
+      <div class="body">
+        <p><strong>Airports (FAA Part 139 mandated AFFF use for 50+ years at every commercial airport):</strong></p>
+        <ul>
+          <li><strong>Miami International Airport (MIA)</strong>, 2100 NW 42nd Ave. — adjacent to EPA Superfund "Varsol Spill" site (1.5 million gallons of paint thinner leaked into the aquifer); FIU sampling found the highest tri-county PFAS tap-water readings closest to MIA</li>
+          <li><strong>Miami-Opa Locka Executive Airport (OPF)</strong>, 14201 NW 42nd Ave. — co-located with Coast Guard Air Station Miami since 1965; inside Miami Springs / Northwest Wellfield zone of contribution</li>
+          <li><strong>Kendall-Tamiami Executive (TMB)</strong>, 12800 SW 137th Ave. — inside West Wellfield zone of contribution (backstop wellfield for WASD)</li>
+          <li><strong>Homestead General Aviation Airport (X51)</strong>, 28790 SW 217th Ave.</li>
+          <li><strong>Dade-Collier Training &amp; Transition (TNT)</strong>, US-41 Ochopee — Big Cypress Preserve · firefighting training airport · upgradient of Everglades headwaters that recharge the Biscayne Aquifer</li>
+          <li><strong>Homestead Air Reserve Base</strong>, 29050 Coral Sea Blvd. — EPA Federal Facilities Agreement effective 1990; off-base wells PFOS/PFOA at 20 ppt; on-base AFFF source-area investigation in early stages</li>
+        </ul>
+        <p><strong>Military / Coast Guard:</strong></p>
+        <ul>
+          <li>Coast Guard Air Station Miami (at OPF), 14550 NW 56th Ct. — on EWG's suspected-PFAS USCG list</li>
+          <li>Naval Air Station Key West / Boca Chica Field — EPA Superfund · on DOD PFAS prioritization list · Florida Keys Aqueduct Authority pulls potable water from south Miami-Dade so the contamination flow is bidirectional</li>
+        </ul>
+        <p><strong>EPA Superfund and Biscayne-Aquifer-threat industrial sites:</strong></p>
+        <ul>
+          <li><strong>Miami Drum Services</strong> (Hialeah/Miami industrial corridor) — NPL 1983; caused the historical shutdown of Preston + Hialeah WTP wellfields</li>
+          <li><strong>Northwest 58th Street Landfill</strong> (Hialeah, 660 acres) — NPL Superfund · 1952–1982 county municipal landfill · presumed PFAS leachate · inside Hialeah/Miami Springs wellfield ZOC</li>
+          <li><strong>Munisport Landfill</strong> (North Miami, 170 acres adjacent to FIU Biscayne Bay Campus) — 6.2 million cu yd municipal waste + toxic drums · documented Biscayne Aquifer impact</li>
+          <li><strong>Anaconda Aluminum / Milgo Electronics</strong> — chrome, nickel, copper electroplating 1961–1983 · groundwater plume reaching Biscayne Aquifer · PFOS historically used as chrome plating mist suppressant</li>
+          <li><strong>Airco Plating Co.</strong> — plating for aviation/aerospace since 1955 · soil + groundwater contamination threatens Biscayne Aquifer · PFOS chrome plating use presumed</li>
+          <li><strong>Anodyne Inc.</strong> (Miami Gardens) — solvent + plating 1960–1978 · NPL Superfund · overlies Biscayne Aquifer</li>
+          <li><strong>Florida Petroleum Reprocessors</strong> (Davie, Broward — immediately adjacent) — 1979–1992 used-oil reprocessing · 870-acre groundwater plume reached municipal wellfield</li>
+        </ul>
+        <p><strong>Landfills, WWTPs, and waste facilities — PFAS leachate documented industry-wide but no Miami-Dade sampling published:</strong></p>
+        <ul>
+          <li>South Dade Landfill (Class I) + adjacent South District WWTP (Black Point, Cutler Bay)</li>
+          <li>Miami-Dade Resources Recovery Facility (waste-to-energy), 6990 NW 97th Ave., Doral — inside Northwest Wellfield ZOC, same neighborhood as MDFR HQ PFAS site</li>
+          <li>Central District WWTP (Virginia Key) · North District WWTP (188th St.)</li>
+        </ul>
+        <p><strong>FAA Part 139 + state firefighter certification requirements:</strong> for decades every fire engine and every fire training site in Miami-Dade Fire Rescue (70+ stations) was required to store and discharge AFFF for ARFF compliance and certification drills. The four sites the FL DEP has formally assessed are not the only contributors; they are the only ones the state has yet sampled.</p>
+        <p style="margin-top:14px;font-style:italic;color:var(--stone)">Florida DEP has assessed 26 fire training facilities statewide. Four are in Miami-Dade. All four came back positive for PFAS contamination over the Florida Groundwater Cleanup Target Level. That is a 4-of-4 hit rate.</p>
+      </div>
+    </details>
+
+    <details style="margin-top:18px">
+      <summary>Northwest Wellfield triple jeopardy — three confirmed AFFF / PFAS sites inside the same drinking-water capture zone</summary>
+      <div class="body">
+        <p>Miami-Dade WASD's Northwest Wellfield supplies roughly 150 million gallons per day to the Main System — the water that reaches Hialeah, Doral, Coral Gables, Pinecrest, Brickell, Key Biscayne, and (via wholesale) Miami Beach. Three confirmed PFAS source sites sit inside the wellfield's documented zone of contribution:</p>
+        <ol>
+          <li><strong>Miami-Dade Fire Rescue HQ Doral</strong> — 9300 NW 41st St. — confirmed soil + groundwater PFAS over GCTL</li>
+          <li><strong>Miami-Dade College Fire Academy</strong> — 3180 NW 119th St., Opa-locka — 800 to 26,100 ppt across 10 monitor wells</li>
+          <li><strong>Miami-Dade Resources Recovery Facility</strong> (waste-to-energy) — 6990 NW 97th Ave., Doral — co-located with MDFR HQ; PFAS in MSW leachate is universal in EPA biosolids sampling nationwide but no Miami-Dade specific data yet published</li>
+        </ol>
+        <p>All three sit upgradient of the wellfield draws. The County's federal complaint (Case 2:20-cv-04194-RMG) names AFFF and Miami-Dade Fire Rescue's own facilities as among the contamination sources WASD is now spending up to $3 billion to remediate.</p>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- ============================= THE REASSURANCE GAP ============================= -->
+<section class="bk alt">
+  <div class="wrap">
+    <div class="eyeb">What they say · what they file in federal court · the gap</div>
+    <h2><strong>"Excellent." "Safe." "Highest quality."</strong> <em>— except in the lawsuit, where they call it contaminated.</em></h2>
+    <p class="lede">Every quote below is verbatim from the cited source — Miami-Dade WASD's own 2024 Annual Water Quality Report, the City of Miami Beach's 2024 Annual Water Quality Report (published December 2025), Miami-Dade's January 2020 press release, and the County Attorney's own November 2023 memorandum to the Board of County Commissioners.</p>
+
+    <div class="reassure-grid">
+
+      <div style="border:1px solid var(--hair);border-radius:6px;padding:28px 26px;background:#fff">
+        <div style="font-family:var(--sans);text-transform:uppercase;letter-spacing:.1em;font-size:11px;color:var(--stone);margin-bottom:14px">What WASD tells the public</div>
+        <p style="font-family:var(--serif);font-size:19px;line-height:1.55;color:var(--ink);margin:0 0 14px;font-style:italic">"the excellent level of our drinking water… Our number one goal is to provide you and your family a safe and dependable supply of drinking water."</p>
+        <div style="font-size:13px;color:var(--stone);border-top:1px solid var(--hair);padding-top:10px">Miami-Dade WASD 2024 Annual Water Quality Report, p. 3</div>
+      </div>
+
+      <div style="border:1px solid #d9534f;border-radius:6px;padding:28px 26px;background:#fff5f5">
+        <div style="font-family:var(--sans);text-transform:uppercase;letter-spacing:.1em;font-size:11px;color:var(--red);margin-bottom:14px">What the County Attorney told the Commission</div>
+        <p style="font-family:var(--serif);font-size:19px;line-height:1.55;color:var(--ink);margin:0 0 14px;font-style:italic">"the current estimate provided by WASD and its consultants for <strong style="font-style:normal;color:var(--red)">addressing the PFAS contamination problem ranges from the high hundreds of millions of dollars to $3 billion.</strong>"</p>
+        <div style="font-size:13px;color:var(--stone);border-top:1px solid var(--hair);padding-top:10px">Miami-Dade County Attorney Geri Bonzon-Keenan, Memorandum to BCC, Resolution R-1015-23, Nov 7, 2023, p. 4</div>
+      </div>
+
+      <div style="border:1px solid var(--hair);border-radius:6px;padding:28px 26px;background:#fff">
+        <div style="font-family:var(--sans);text-transform:uppercase;letter-spacing:.1em;font-size:11px;color:var(--stone);margin-bottom:14px">What Miami Beach tells the public</div>
+        <p style="font-family:var(--serif);font-size:19px;line-height:1.55;color:var(--ink);margin:0 0 14px;font-style:italic">"the city's drinking water quality continues to be excellent — not just safe for our more than 80,000 residents but also for the millions of visitors who travel to Miami Beach each year."</p>
+        <div style="font-size:13px;color:var(--stone);border-top:1px solid var(--hair);padding-top:10px">City of Miami Beach 2024 Annual Water Quality Report, published December 2025</div>
+      </div>
+
+      <div style="border:1px solid #d9534f;border-radius:6px;padding:28px 26px;background:#fff5f5">
+        <div style="font-family:var(--sans);text-transform:uppercase;letter-spacing:.1em;font-size:11px;color:var(--red);margin-bottom:14px">What that same Miami Beach AWQR reports for PFAS</div>
+        <p style="font-family:var(--serif);font-size:19px;line-height:1.55;color:var(--ink);margin:0 0 14px;font-style:italic">"<strong style="font-style:normal;color:var(--red)">PFOS 38 ppt (ND–38). PFOA 30 ppt (ND–30).</strong>" Compared to the federal MCL of 4 ppt for each: <strong style="font-style:normal;color:var(--red)">9.5× over for PFOS, 7.5× over for PFOA</strong>. The same brochure calls the water "excellent."</p>
+        <div style="font-size:13px;color:var(--stone);border-top:1px solid var(--hair);padding-top:10px">City of Miami Beach 2024 AWQR, p. 8 — Additional Contaminants Monitoring table</div>
+      </div>
+
+      <div style="border:1px solid var(--hair);border-radius:6px;padding:28px 26px;background:#fff">
+        <div style="font-family:var(--sans);text-transform:uppercase;letter-spacing:.1em;font-size:11px;color:var(--stone);margin-bottom:14px">What WASD said in January 2020</div>
+        <p style="font-family:var(--serif);font-size:19px;line-height:1.55;color:var(--ink);margin:0 0 14px;font-style:italic">"All drinking water provided from our plants to our customers is well within the current Health Advisory Level for PFAS."</p>
+        <div style="font-size:13px;color:var(--stone);border-top:1px solid var(--hair);padding-top:10px">Miami-Dade WASD official press release, January 23, 2020</div>
+      </div>
+
+      <div style="border:1px solid #d9534f;border-radius:6px;padding:28px 26px;background:#fff5f5">
+        <div style="font-family:var(--sans);text-transform:uppercase;letter-spacing:.1em;font-size:11px;color:var(--red);margin-bottom:14px">What WASD did NOT tell the public until then</div>
+        <p style="font-family:var(--serif);font-size:19px;line-height:1.55;color:var(--ink);margin:0 0 14px;font-style:italic">In July 2019, three of WASD's own Miami Springs golf-course wells tested at <strong style="font-style:normal;color:var(--red)">184, 182, and 124 ppt</strong> combined PFOA+PFOS — over <strong style="font-style:normal;color:var(--red)">2.6× the federal Health Advisory.</strong> WASD took the wells offline in <strong style="font-style:normal;color:var(--red)">August 2019.</strong> Residents were told <strong style="font-style:normal;color:var(--red)">five months later.</strong></p>
+        <div style="font-size:13px;color:var(--stone);border-top:1px solid var(--hair);padding-top:10px">Miami-Dade County records cited by Miami New Times, Jan 24, 2020 · Miami Today News, July 21, 2020 (Director Kevin Lynskey)</div>
+      </div>
+
+      <div style="border:1px solid var(--hair);border-radius:6px;padding:28px 26px;background:#fff">
+        <div style="font-family:var(--sans);text-transform:uppercase;letter-spacing:.1em;font-size:11px;color:var(--stone);margin-bottom:14px">What WASD told its customers about the wells</div>
+        <p style="font-family:var(--serif);font-size:19px;line-height:1.55;color:var(--ink);margin:0 0 14px;font-style:italic">"When blended with water from the other 20-plus wells that serve the Hialeah water treatment, the water from the plant was well below the [federal] health advisory level."</p>
+        <div style="font-size:13px;color:var(--stone);border-top:1px solid var(--hair);padding-top:10px">WASD Deputy Director Doug Yoder, January 2020 — Miami New Times</div>
+      </div>
+
+      <div style="border:1px solid #d9534f;border-radius:6px;padding:28px 26px;background:#fff5f5">
+        <div style="font-family:var(--sans);text-transform:uppercase;letter-spacing:.1em;font-size:11px;color:var(--red);margin-bottom:14px">What WASD argued to the federal court</div>
+        <p style="font-family:var(--serif);font-size:19px;line-height:1.55;color:var(--ink);margin:0 0 14px;font-style:italic">"because the levels of PFAS in the County's drinking water supply relative to the projected state and federal MCL are <strong style="font-style:normal;color:var(--red)">high</strong>, the County will be entitled to … a <strong style="font-style:normal;color:var(--red)">4× 3M Regulatory Bump</strong>" — i.e., the County argued in federal court that its water was contaminated badly enough to qualify for the <strong style="font-style:normal;color:var(--red)">maximum regulatory enhancement.</strong></p>
+        <div style="font-size:13px;color:var(--stone);border-top:1px solid var(--hair);padding-top:10px">Resolution R-1015-23, County Attorney memo, p. 7</div>
+      </div>
+
+    </div>
+
+    <details style="margin-top:36px">
+      <summary>The timeline — what WASD knew, and when residents found out</summary>
+      <div class="body">
+        <table style="width:100%;border-collapse:collapse;margin:12px 0;font-size:14.5px">
+          <thead><tr style="border-bottom:1px solid var(--ink);text-align:left">
+            <th style="padding:10px 14px 10px 0">Date</th>
+            <th style="padding:10px 14px">What happened</th>
+            <th style="padding:10px 14px">Source</th>
+          </tr></thead>
+          <tbody>
+            <tr style="border-bottom:1px solid var(--hair)"><td style="padding:8px 14px 8px 0">2013–2015</td><td style="padding:8px 14px">EPA UCMR3 federal monitoring detects PFOA/PFOS in WASD water. WASD has the data.</td><td style="padding:8px 14px">EPA UCMR3 dataset</td></tr>
+            <tr style="border-bottom:1px solid var(--hair)"><td style="padding:8px 14px 8px 0">2019 (start)</td><td style="padding:8px 14px">WASD begins quarterly PFAS testing of its own wells.</td><td style="padding:8px 14px">R-1015-23 p. 4</td></tr>
+            <tr style="border-bottom:1px solid var(--hair);background:#fff5f5"><td style="padding:8px 14px 8px 0"><strong>July 2019</strong></td><td style="padding:8px 14px"><strong>Three Miami Springs golf-course wells test at 184, 182, and 124 ppt combined PFOA+PFOS</strong> — over 2.6× the 70 ppt federal Health Advisory.</td><td style="padding:8px 14px">County records via Miami New Times</td></tr>
+            <tr style="border-bottom:1px solid var(--hair);background:#fff5f5"><td style="padding:8px 14px 8px 0"><strong>Aug 2019</strong></td><td style="padding:8px 14px"><strong>WASD takes the three Miami Springs wells offline.</strong></td><td style="padding:8px 14px">WASD press release; Miami New Times</td></tr>
+            <tr style="border-bottom:1px solid var(--hair)"><td style="padding:8px 14px 8px 0">Oct 2019</td><td style="padding:8px 14px">Miami-Dade College Fire Academy monitoring wells test at 800–26,100 ppt PFAS.</td><td style="padding:8px 14px">FDEP records</td></tr>
+            <tr style="border-bottom:1px solid var(--hair);background:#fff5f5"><td style="padding:8px 14px 8px 0"><strong>Jan 23, 2020</strong></td><td style="padding:8px 14px"><strong>5 months after the shutdown — WASD issues its first public statement,</strong> saying water is "well within" Health Advisory after blending.</td><td style="padding:8px 14px">miamidade.gov press release</td></tr>
+            <tr style="border-bottom:1px solid var(--hair)"><td style="padding:8px 14px 8px 0">Jan 24, 2020</td><td style="padding:8px 14px">Miami New Times breaks the Miami Springs shutdown story publicly.</td><td style="padding:8px 14px">Miami New Times</td></tr>
+            <tr style="border-bottom:1px solid var(--hair)"><td style="padding:8px 14px 8px 0">Feb 4, 2020</td><td style="padding:8px 14px">BCC adopts R-146-20 authorizing PFAS litigation.</td><td style="padding:8px 14px">R-1015-23 p. 5</td></tr>
+            <tr style="border-bottom:1px solid var(--hair)"><td style="padding:8px 14px 8px 0">Dec 3, 2020</td><td style="padding:8px 14px">County files Miami-Dade v. 3M et al., 2:20-cv-04194-RMG.</td><td style="padding:8px 14px">PACER · MDL 2873</td></tr>
+            <tr style="border-bottom:1px solid var(--hair);background:#fff5f5"><td style="padding:8px 14px 8px 0"><strong>Nov 7, 2023</strong></td><td style="padding:8px 14px"><strong>Resolution R-1015-23 — the County publicly admits the PFAS treatment cost is $300M to $3B.</strong></td><td style="padding:8px 14px">R-1015-23 p. 4</td></tr>
+          </tbody>
+        </table>
+        <p style="margin-top:18px">The County tested. The County found contamination. The County took wells offline. The County waited five months. The County's official communication, when it came, emphasized "blending" — that the dirtier water was diluted with cleaner water until it averaged below the federal advisory. That argument depends on a specific assumption: that a Miami mother's pregnancy and her child's first 1,000 days of development care about the blended average, rather than what entered her tap on the day the dirty wells were running.</p>
+        <p style="margin-top:14px;font-style:italic;color:var(--stone)">Families plan their lives on the public reassurance, not the federal pleadings. The gap between the two is, today, ninety-five wells wide and three billion dollars deep.</p>
+      </div>
+    </details>
+
+    <details style="margin-top:18px">
+      <summary>Why does Miami Beach's AWQR show higher PFAS than WASD's, for the same source water?</summary>
+      <div class="body">
+        <p>Both reports describe the same source water — the Biscayne Aquifer, drawn through WASD's Hialeah, John E. Preston, and Alexander Orr treatment plants — and both rely on the same underlying sampling program (federal UCMR5 monitoring, conducted by WASD using EPA Methods 533 and 537.1). They publish different numbers because each utility chose to present the data differently.</p>
+        <p>WASD's "Main System" column reports the highest single PFAS detection from the consolidated pool of Main System entry points and is effectively a blended-system maximum (31 ppt PFOS, 16 ppt PFOA). Miami Beach, which buys 100% of its water from WASD and is fed primarily by the older Hialeah and John E. Preston plants — the plants closest to historical AFFF firefighting-foam contamination from the Miami River industrial corridor and MIA — reports the highest detection at the entry point that specifically feeds the island (38 ppt PFOS, 30 ppt PFOA). WASD's own report internally corroborates this band — the South Dade subsystem shows 35 ppt PFOS and the REDAVO subsystem shows 35 ppt PFOS, so values in the 30s are present across the WASD system, not just on Miami Beach.</p>
+        <p>Neither number is an annual average; both are the highest single detection during the reporting period at the entry point to distribution. UCMR5 samples groundwater systems only twice per year, at the entry point, not at customer taps — so neither figure reflects what a child actually drinks at home.</p>
+        <p><strong>The decision-relevant conclusion:</strong> a Miami Beach household should use the Miami Beach number (38 PFOS, 30 PFOA) as the planning value, because it describes the entry point that actually feeds the island. Both numbers point to the same action — even WASD's lower 31 ppt PFOS is 7.75× the EPA's 4 ppt federal MCL.</p>
+      </div>
+    </details>
+
+  </div>
+</section>
+
+<!-- ============================= AFFF SETTLEMENTS ============================= -->
+<section class="bk">
+  <div class="wrap">
+    <div class="eyeb">The polluters have already paid · the legal record is closed</div>
+    <h2>Miami-Dade has already won <strong>$199 million</strong> for PFAS in its water. <em>Before a single trial.</em></h2>
+    <p class="lede">On November 7, 2023, the Miami-Dade County Board of Commissioners passed Resolution R-1015-23, authorizing participation in the federal AFFF class settlements. The County Attorney's memo to the Board put Miami-Dade's good-faith estimated recovery from 3M alone at <strong>approximately $199 million</strong>, plus ~$19 million from DuPont, Chemours, and Corteva — money the Board explicitly earmarked for PFAS treatment at the Water and Sewer Department.</p>
+
+    <div class="headlines" style="margin-top:30px">
+      <div class="headline">
+        <div class="lab">Miami-Dade County · 3M settlement</div>
+        <div class="big red">$199<span style="font-size:.55em">M</span></div>
+        <div class="desc">Good-faith estimated recovery from 3M alone, per County Attorney memo to the Commission. Includes the 4× Regulatory Bump; before the 25% Litigation Bump and 15–18% attorneys' fees.</div>
+        <div class="src">Miami-Dade Resolution R-1015-23 · <a href="http://www.miamidade.gov/govaction/legistarfiles/MinMatters/Y2023/232288min.pdf" target="_blank">official County memo</a></div>
+      </div>
+      <div class="headline">
+        <div class="lab">Miami-Dade · DuPont/Chemours/Corteva</div>
+        <div class="big red">+$19<span style="font-size:.55em">M</span></div>
+        <div class="desc">Additional Phase One estimated recovery from the DuPont $1.185B class settlement. Both 3M and DuPont/Chemours opted into by Miami-Dade as a class member.</div>
+        <div class="src">Same Resolution R-1015-23 · MDL 2873 case 2:23-cv-03230-RMG</div>
+      </div>
+      <div class="headline">
+        <div class="lab">Broward cities (Hollywood, Hallandale, Dania, Sunrise)</div>
+        <div class="big red">~$35<span style="font-size:.55em">M</span></div>
+        <div class="desc">Combined 2025 payout to the four Broward cities directly downgradient of Fort Lauderdale-Hollywood Airport. Per-city allocation driven by treated water volume.</div>
+        <div class="src">South Florida Sun Sentinel · <a href="https://broward.us/2025/06/29/south-florida-cities-getting-millions-from-settlement-in-forever-chemicals-legal-battle/" target="_blank">Jun 29, 2025</a></div>
+      </div>
+      <div class="headline">
+        <div class="lab">WASD's own remediation cost estimate</div>
+        <div class="big red">up to $3<span style="font-size:.55em">B</span></div>
+        <div class="desc">WASD's own estimate of the total cost to remove PFAS from Miami-Dade drinking water — "high hundreds of millions to $3 billion." The settlement covers, at most, mid-teens percent of the bill. The rest falls on residents.</div>
+        <div class="src">Miami-Dade County Attorney memo · R-1015-23</div>
+      </div>
+    </div>
+
+    <details style="margin-top:32px">
+      <summary>The legal record · what the cases actually established</summary>
+      <div class="body">
+        <p>Both settlements arise from the same federal court: <strong>In re Aqueous Film-Forming Foams Products Liability Litigation, MDL No. 2873</strong>, U.S. District Court for the District of South Carolina, Judge Richard M. Gergel. The class-action subset is case <strong>2:23-cv-03230-RMG</strong>.</p>
+        <p><strong>The defendants who paid:</strong> 3M (under its $10.3–$12.5B global class settlement, final-approved Feb. 2, 2024); DuPont, Chemours, and Corteva (under their $1.185B class settlement, final-approved Feb. 2024); Tyco Fire Products (~$750M, approved 2024); BASF Corporation (~$316.5M, approved 2024). Miami-Dade and the Broward cities each opted into all four class settlements as class members.</p>
+        <p><strong>The legal theory established in federal court:</strong> Plaintiffs pled — and the court approved settlement on — five causes of action. (1) <strong>Strict product liability for design defect</strong>: PFAS-containing AFFF was unreasonably dangerous and safer alternatives existed. (2) <strong>Strict product liability for failure to warn</strong>: the manufacturers knew of PFAS toxicity decades before disclosure. (3) <strong>Negligence</strong> in design, manufacture, and sale. (4) <strong>Continuing trespass</strong>: PFAS migrating through groundwater into utility wells is an ongoing trespass on water-system property. (5) <strong>Public nuisance</strong>: the contamination interferes with the public right to safe drinking water. Miami-Dade additionally pled <strong>actual and constructive fraudulent transfer</strong> against DuPont, regarding the Chemours spinoff structured to insulate DuPont from PFAS liability.</p>
+        <p><strong>At the time of Miami-Dade's complaint filing (Dec. 3, 2020):</strong> 70 of WASD's 95 wells had detectable PFAS. Six wells exceeded the (then-current) 70 ppt EPA health advisory. Three Miami Springs wells were taken offline. Three Hialeah wells remained online specifically to avoid spreading contamination through the aquifer.</p>
+        <p><strong>The source named in the operative complaints:</strong> aqueous film-forming foam (AFFF) used at MIA, Opa-locka, Homestead Air Reserve Base, fire-training facilities, and other AFFF sites. Class counsel's own consent letter to the County: "contamination of Drinking Water supplies with PFAS primarily through AFFF (which is estimated to have caused the majority of the PFAS contamination in Drinking Water)."</p>
+        <p>The fight is no longer whether South Florida water has been contaminated by AFFF. The fight is no longer whether the polluters owe the money. Both questions are answered. The remaining fights are whether ~$234 million combined to Miami-Dade County and the four Broward cities is enough to fix what the carbon-fluorine bond has put into the Biscayne Aquifer — and whether the cumulative load already in residents' bodies will produce the cancers, the pregnancies, and the developmental harms the literature predicts.</p>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- ============================= ACTION BAND ============================= -->
+<section class="action-band" id="act">
+  <div class="narrow">
+    <h2>Get the Project Miami briefing. <em>Stay on the list.</em></h2>
+    <p>Add your name and your ZIP. You'll get the next briefing as new utility AWQRs, federal court filings, and Miami-Dade health data are published — plus first notice when free Miami-Dade water testing is available in your ZIP.</p>
+    <a href="mailto:rigano@projectmiami.org?subject=Add%20me%20to%20the%20Project%20Miami%20briefing%20list&amp;body=ZIP%20code%3A%20%0AName%3A%20%0ANotes%3A%20%0A%0A(Project%20Miami%20is%20a%20Forever%20Chemicals%20education%20initiative%20for%20Miami%20mothers%2C%20independent%20of%20any%20product%20sale.%20Your%20information%20will%20never%20be%20sold.)" class="cta-primary">Email Project Miami to join →</a>
+    <div class="cta-note">Independent · primary-source-cited · no obligation · we will never sell your information</div>
+  </div>
+</section>
+
+<!-- ============================= SOURCES ============================= -->
+<section class="sources">
+  <div class="wrap">
+    <h3>Sources — every number on this page is linked</h3>
+    <ul>
+      <li><a href="https://statecancerprofiles.cancer.gov/quick-profiles/index.php?statename=florida" target="_blank">NCI State Cancer Profiles — Florida (all county tables, 2018–2022)</a></li>
+      <li><a href="https://www.flhealthcharts.gov/charts/" target="_blank">FLHealthCHARTS — Florida Department of Health</a></li>
+      <li><a href="https://www.epa.gov/dwucmr/fifth-unregulated-contaminant-monitoring-rule-data-finder" target="_blank">EPA UCMR5 Data Finder (PFAS in finished drinking water)</a></li>
+      <li><a href="https://www.miamidade.gov/resources/water/documents/reports/water-quality-2024.pdf" target="_blank">Miami-Dade WASD 2024 Annual Water Quality Report (Main System PFOA 16, PFOS 31, HI 1.1 peak 1.3; South Dade PFOS 35; REDAVO PFOS 35)</a></li>
+      <li><a href="https://www.miamibeachfl.gov/wp-content/uploads/2025/12/MB-2024-Water-Quality-Report.pdf" target="_blank">City of Miami Beach 2024 Annual Water Quality Report (PFOS 38, PFOA 30 — higher than WASD's own report for the same source water; published Dec 2025)</a></li>
+      <li><a href="https://www.citynmb.com/905/Water-Quality-Reports" target="_blank">NMB Water 2024 Annual Water Quality Report (PFOA 5.3, PFOS 20, HI 2.5 peak 3.0)</a></li>
+      <li><a href="http://www.miamidade.gov/govaction/legistarfiles/MinMatters/Y2023/232288min.pdf" target="_blank">Miami-Dade County Resolution R-1015-23 (Nov 7, 2023) — $199M / $19M AFFF settlement participation; $300M–$3B WASD remediation cost; 4× Regulatory Bump admission</a></li>
+      <li><a href="https://broward.us/2025/06/29/south-florida-cities-getting-millions-from-settlement-in-forever-chemicals-legal-battle/" target="_blank">South FL Sun Sentinel (Jun 29, 2025) — ~$35M Broward cities AFFF settlement</a></li>
+      <li><a href="https://www.pfaswatersettlement.com/" target="_blank">PFAS Water Settlement portal · MDL 2873 (S.D.S.C., Judge Gergel)</a></li>
+      <li><a href="https://www.miamidade.gov/global/news-item.page?Mduid_news=news157980026445734" target="_blank">Miami-Dade WASD official press release (Jan 23, 2020) — 6 of 89 wells over HAL, 3 taken offline</a></li>
+      <li><a href="https://www.miaminewtimes.com/news/miami-springs-drinking-water-wells-closed-due-to-pfas-chemical-contamination-11457563/" target="_blank">Miami New Times (Jan 24, 2020) — Miami Springs golf-course wells at 184, 182, 124 ppt; shutdown August 2019</a></li>
+      <li><a href="https://www.miamitodaynews.com/2020/07/21/miami-dade-to-sue-makers-of-cancer-linked-chemicals-pfas/" target="_blank">Miami Today News (Jul 21, 2020) — Director Lynskey: 70 of 95 wells with detectable PFAS</a></li>
+      <li><a href="https://floridadep.gov/waste/waste-cleanup/content/miami-dade-fire-rescue" target="_blank">Florida DEP — Miami-Dade Fire Rescue Doral (9300 NW 41st St.) AFFF source site</a></li>
+      <li><a href="https://www.ewg.org/tapwater/" target="_blank">EWG Tap Water Database — supplementary, snapshot-only</a></li>
+      <li><a href="https://pubmed.ncbi.nlm.nih.gov/34562756/" target="_blank">Li, Fatowe, Cui &amp; Quinete (2022), Sci Total Environ — Grapeland Heights 242 ppt total ΣPFAS; Dania Beach (downgradient of FLL) 124 ppt</a></li>
+      <li><a href="https://floridadep.gov/waste/waste-cleanup/content/miami-dade-academy-fire-science" target="_blank">Florida DEP — Miami-Dade Academy of Fire Science 26,100 ppt</a></li>
+      <li><a href="https://floridadep.gov/waste/waste-cleanup/content/pfas-investigation-federal-facilities" target="_blank">Florida DEP — PFAS Investigation at Federal Facilities (Pensacola Saufley 4.3M ppt, Tyndall, NAS Jacksonville, others)</a></li>
+      <li><a href="https://www.acq.osd.mil/eie/eer/ecc/pfas/data/cleanup-pfas.html" target="_blank">DOD PFAS Installation Cleanup List (Patrick SFB, Homestead ARB, NAS Key West, MacDill, Eglin)</a></li>
+      <li><a href="https://www.ewg.org/interactive-maps/2020-military-pfas-sites/" target="_blank">EWG Military PFAS Contamination Map</a></li>
+      <li><a href="https://www.atsdr.cdc.gov/pfas/health-studies/multi-site-study.html" target="_blank">ATSDR Multi-Site PFAS Health Study</a></li>
+      <li><a href="https://www.cbsnews.com/miami/news/improving-birth-outcomes-for-minority-women/" target="_blank">CBS Miami (Oct 2022) — Memorial Healthcare System (Broward) 9.4% hypertensive disorders of pregnancy</a></li>
+      <li><a href="https://www.marchofdimes.org/peristats/data?reg=12086&top=4&stop=51&lev=1&obj=1&slev=6" target="_blank">March of Dimes PeriStats — Miami-Dade County</a></li>
+      <li><a href="https://www.cdc.gov/art/php/national-summary/index.html" target="_blank">CDC ART National Summary — IVF data</a></li>
+      <li><a href="https://www.cdc.gov/nchs/products/databriefs/db525.htm" target="_blank">CDC NCHS Data Brief 525 — NICU admissions rising</a></li>
+      <li><a href="https://www.cdc.gov/mmwr/volumes/74/ss/ss7402a1.htm" target="_blank">CDC ADDM 2022 — Autism prevalence 1 in 31</a></li>
+      <li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4020503/" target="_blank">Amin et al. 2014 — South Florida thyroid cancer cluster</a></li>
+      <li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10023130/" target="_blank">Florida pediatric cancer 1981–2020 — 326% increase</a></li>
+      <li><a href="https://diabetesjournals.org/diabetes/article/71/12/2702/147562/" target="_blank">OneFlorida+ T1D acceleration post-2020</a></li>
+      <li><a href="https://www.flhealthcharts.gov/ChartsReports/rdPage.aspx?rdReport=NonVitalIndNoGrpBD.DataViewer&cid=37" target="_blank">Florida Birth Defects Registry — Hypospadias 72.7/10K</a></li>
+      <li><a href="https://www.iarc.who.int/news-events/iarc-monographs-evaluate-the-carcinogenicity-of-perfluorooctanoic-acid-pfoa-and-perfluorooctanesulfonic-acid-pfos/" target="_blank">IARC Monograph 135 (Nov 2023) — PFOA Group 1</a></li>
+      <li><a href="https://www.epa.gov/sdwa/and-polyfluoroalkyl-substances-pfas" target="_blank">EPA PFAS National Primary Drinking Water Regulation (April 2024)</a></li>
+      <li><a href="https://pubmed.ncbi.nlm.nih.gov/22274686/" target="_blank">Grandjean JAMA 2012 — Vaccine antibody response in PFAS-exposed children</a></li>
+      <li><a href="https://pubmed.ncbi.nlm.nih.gov/18008002/" target="_blank">Apelberg EHP 2007 — Cord-blood PFAS and birth size</a></li>
+      <li><a href="https://www.nationalacademies.org/read/26156/chapter/7" target="_blank">NASEM 2022 — PFAS clinical follow-up guidance</a></li>
+      <li><a href="https://pubs.acs.org/doi/10.1021/acs.estlett.0c00713" target="_blank">Andrews &amp; Naidenko 2020, ES&amp;T Letters — drinking-water-to-serum coefficient</a></li>
+      <li><a href="https://pubmed.ncbi.nlm.nih.gov/36377604/" target="_blank">Levine et al. 2023, Hum Reprod Update — global sperm count decline 1973–2018</a></li>
+      <li><a href="https://pubmed.ncbi.nlm.nih.gov/31744629/" target="_blank">Jin et al. 2020, Environ Int — PFAS and pediatric NAFLD severity (n=74, 51% Hispanic)</a></li>
+      <li><a href="https://pubmed.ncbi.nlm.nih.gov/30403786/" target="_blank">Di Nisio et al. 2019, J Clin Endocrinol Metab — PFAS, penile length, AGD, testes, AR antagonism (n=212 Veneto exposed boys)</a></li>
+      <li><a href="https://pubmed.ncbi.nlm.nih.gov/36396760/" target="_blank">Wang et al. 2023, ESPR — PFOA/PFNA reduce sperm motility (meta-analysis, n=2,190 men)</a></li>
+      <li><a href="https://pubmed.ncbi.nlm.nih.gov/24007715/" target="_blank">Barry et al. 2013, EHP — PFOA and testicular cancer in C8 Health Study</a></li>
+      <li><a href="https://pubmed.ncbi.nlm.nih.gov/26035660/" target="_blank">Lewis et al. 2015, IJERPH — PFOS and lower testosterone in adolescent boys (NHANES)</a></li>
+      <li><a href="https://pubmed.ncbi.nlm.nih.gov/39233077/" target="_blank">Du et al. 2024, STOTEN — PFAS thyroid disruption meta-analysis (16 compounds × 5 hormones)</a></li>
+      <li><a href="https://pubmed.ncbi.nlm.nih.gov/39047923/" target="_blank">Boyd et al. 2024, Mol Cell Endocrinol — PFAS and thyroid cancer meta-analysis</a></li>
+      <li><a href="https://pubmed.ncbi.nlm.nih.gov/26058082/" target="_blank">Khalil et al. 2016, EHP — PFAS and lower bone density / osteoporosis in U.S. women (NHANES)</a></li>
+      <li><a href="https://pubmed.ncbi.nlm.nih.gov/32319790/" target="_blank">Liew et al. 2020, EHP — PFAS and miscarriage (Danish National Birth Cohort)</a></li>
+      <li><a href="https://pubmed.ncbi.nlm.nih.gov/39179042/" target="_blank">Rodríguez-Carrillo et al. 2024, STOTEN — PFAS and endometriosis (ENDEA Spain)</a></li>
+      <li><a href="https://pubmed.ncbi.nlm.nih.gov/34174373/" target="_blank">Lind et al. 2021, Reprod Toxicol — Maternal PFAS and anogenital distance (Faroese)</a></li>
+      <li><a href="https://pubmed.ncbi.nlm.nih.gov/24868551/" target="_blank">Amin et al. 2014, BioMed Res Int — South Florida AYA (15–39) thyroid cancer clusters</a></li>
+      <li><a href="https://floridadep.gov/waste/waste-cleanup/content/miami-dade-academy-fire-science" target="_blank">FL DEP — Miami-Dade College Fire Academy (800–26,100 ppt monitor wells)</a></li>
+      <li><a href="https://floridadep.gov/waste/waste-cleanup/content/city-miami-fire-rescue-training-center" target="_blank">FL DEP — City of Miami Fire Rescue Training Center (Old Smokey site)</a></li>
+      <li><a href="https://floridadep.gov/waste/waste-cleanup/content/city-hialeah-training-facility" target="_blank">FL DEP — City of Hialeah Training Facility</a></li>
+      <li><a href="https://www.epa.gov/sdwa/and-polyfluoroalkyl-substances-pfas#NPDWR" target="_blank">EPA PFAS NPDWR status update (May 2026 proposed rescission of PFHxS / PFNA / HFPO-DA / Hazard Index; PFOA &amp; PFOS 4 ppt MCLs remain)</a></li>
+    </ul>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap">
+    <div><strong style="color:#fff">Project Miami</strong> — a Forever Chemicals education and infrastructure initiative for Miami mothers. Author of record: Gregory J. Rigano, Esq., environmental attorney, Miami Beach resident. Author of the May 2026 PFAS Memorandum to the City of Miami Beach Commissioners.</div>
+    <div class="disclosure">Disclosure: Project Miami is published in partnership with Culligan Florida. The author is compensated by Culligan Florida for this initiative. Every contamination figure and every health number on this page is drawn from publicly available primary sources — EPA, IARC, FLHealthCHARTS, NCI State Cancer Profiles, FIU peer-reviewed academic research, Florida DEP, March of Dimes, CDC NHANES, ATSDR, CDC ADDM, and federal MDL litigation records — and is independent of that partnership. This site is informational; it is not a substitute for medical, legal, or engineering advice. Every claim links to its primary source.</div>
+  </div>
+</footer>
+
+<script>
+// ZIP code dataset — every number pulled from the utilities' own 2024 AWQRs
+const zipData = {
+  hialeah: {
+    title: "Hialeah · Hialeah Gardens",
+    badge: "WASD MAIN SYSTEM · DOWNGRADIENT OF MIA",
+    pfoa: 16, pfos: 31, multiple: "7.75× MCL (PFOS) · HI 1.1 (peak 1.3)",
+    serum: "Model-predicted ≈2.5–3× a typical US woman of childbearing age",
+    source: "Miami-Dade WASD 2024 AWQR · Main System",
+    note: "Hialeah is supplied by the Hialeah/John E. Preston Water Treatment Plant, part of WASD's Main System. PFOA 16 ppt (range 3–16), PFOS 31 ppt (range 7–31), PFHxS 10, PFNA 5. Hazard Index 1.1 (peak 1.3) — over the federal HI MCL of 1.0.",
+  },
+  doral: {
+    title: "Doral",
+    badge: "WASD MAIN SYSTEM",
+    pfoa: 16, pfos: 31, multiple: "7.75× MCL (PFOS) · HI 1.1 (peak 1.3)",
+    serum: "Model-predicted ≈2.5–3× a typical US woman",
+    source: "Miami-Dade WASD 2024 AWQR · Main System (PWSID FL4130871)",
+    note: "Doral is on the WASD Main System distribution. Same Hazard Index 1.1 (peak 1.3) as Hialeah and Coral Gables — over the federal MCL.",
+  },
+  "miami-beach": {
+    title: "Miami Beach",
+    badge: "MB AWQR REPORTS THE HIGHEST PFAS",
+    pfoa: 30, pfos: 38, multiple: "9.5× MCL (PFOS) — Miami Beach's own utility report",
+    serum: "Model-predicted ≈3× a typical US woman",
+    source: "City of Miami Beach 2024 AWQR (published Dec 2025)",
+    note: "Miami Beach buys 100% of its water wholesale from WASD and has no independent treatment — yet Miami Beach's own December 2025 AWQR reports PFOS 38 ppt (ND–38) and PFOA 30 ppt (ND–30), higher than WASD's own report (31 / 16) for the same source water. The MB AWQR shows MDC (Miami-Dade County) for its distribution column, deferring to source readings. The 38 ppt PFOS and 30 ppt PFOA are the highest 2024 utility-published readings for any Miami-Dade ZIP.",
+  },
+  grapeland: {
+    title: "Grapeland Heights · next to Miami International Airport",
+    badge: "HIGHEST DOCUMENTED PEER-REVIEWED TAP",
+    pfoa: "see note", pfos: "242 ppt total ΣPFAS · site avg 168", multiple: "Highest of 21 So FL taps tested",
+    serum: "Model-predicted elevation above NHANES female childbearing-age baseline",
+    source: "Li, Fatowe, Cui & Quinete — Sci Total Environ 2022 (PMID 34562756)",
+    note: "Peer-reviewed FIU sampling next to MIA: 242 ppt total ΣPFAS (sum of 30 measured congeners), Grapeland-site average 168 ppt across replicate samples. Most-detected compounds were PFBA, PFBS, PFPeA, PFHxA, PFHxS, PFOA, PFOS. PFOA and PFOS individually were below the 2016 EPA health advisory; the total reflects a mix of short-chain PFAS dominated by PFBA.",
+  },
+  "coral-gables": {
+    title: "Coral Gables",
+    badge: "WASD MAIN SYSTEM",
+    pfoa: 16, pfos: 31, multiple: "7.75× MCL (PFOS) · HI 1.1 (peak 1.3)",
+    serum: "Model-predicted ≈2.5–3× a typical US woman",
+    source: "WASD 2024 AWQR · Main System",
+    note: "Coral Gables is on the WASD Main System distribution — same Hazard Index 1.1, peak 1.3, as Hialeah, Doral, Brickell, Key Biscayne, Pinecrest.",
+  },
+  pinecrest: {
+    title: "Pinecrest · Kendall · South Miami",
+    badge: "WASD MAIN SYSTEM",
+    pfoa: 16, pfos: 31, multiple: "7.75× MCL (PFOS) · HI 1.1 (peak 1.3)",
+    serum: "Model-predicted ≈2.5–3× a typical US woman",
+    source: "WASD 2024 AWQR · Main System (Alexander Orr wellfield)",
+    note: "Pinecrest, Kendall, and South Miami are served from WASD's Alexander Orr wellfield, blended into the Main System distribution. Same Main System numbers as Hialeah, Doral, Coral Gables, Brickell.",
+  },
+  "north-miami-beach": {
+    title: "North Miami Beach (NMB Water)",
+    badge: "WORST HAZARD INDEX IN MIAMI-DADE",
+    pfoa: 5.3, pfos: 20, multiple: "5.0× MCL (PFOS) · peak 35 ppt · HI 2.5 (peak 3.0)",
+    serum: "Model-predicted ≈1.5–2× a typical US woman",
+    source: "NMB Water 2024 AWQR (PWSID FL4131618)",
+    note: "NMB Water is an independent utility (NOT WASD wholesale — the WASD report itself shows N/A in the NMB column). PFOA 5.3 ppt (range 1.5–5.3), PFOS 20 ppt average (range 15–35). Hazard Index 2.5 with peak 3.0 — the single most extreme finished-water PFAS reading currently published by any Miami-Dade utility. Triple the federal HI MCL of 1.0.",
+  },
+  homestead: {
+    title: "Homestead · Florida City",
+    badge: "WASD SOUTH DADE · ARB ADJACENT",
+    pfoa: 11, pfos: 35, multiple: "8.75× MCL (PFOS) · HI 0.4",
+    serum: "Model-predicted ≈2× a typical US woman",
+    source: "WASD 2024 AWQR · South Dade Water Supply System",
+    note: "Homestead and Florida City are on WASD's South Dade Water Supply subsystem. PFOA 11 (ND–11), PFOS 35 (15–35), Hazard Index 0.4 — under the federal HI MCL. PFOS still 8.75× the federal MCL. Homestead Air Reserve Base sits ~2 miles upgradient and is under DOD Federal Facilities Agreement for PFAS — only banded '>20 ppt' data has been publicly disclosed for the base itself.",
+  },
+  aventura: {
+    title: "Aventura · WASD REDAVO subsystem",
+    badge: "WASD REDAVO · HIGH PFOS / LOW PFOA",
+    pfoa: 1.6, pfos: 35, multiple: "8.75× MCL (PFOS) · PFOA below MCL",
+    serum: "Model-predicted ≈2× a typical US woman",
+    source: "WASD 2024 AWQR · REDAVO subsystem",
+    note: "Aventura is served from WASD's REDAVO subsystem. PFOA 1.6 ppt (0.5–1.6), well below the 4 ppt MCL — but PFOS 35 ppt (19–35), the same 8.75× MCL exceedance as South Dade.",
+  },
+  "key-biscayne": {
+    title: "Key Biscayne · Brickell",
+    badge: "WASD MAIN SYSTEM",
+    pfoa: 16, pfos: 31, multiple: "7.75× MCL (PFOS) · HI 1.1 (peak 1.3)",
+    serum: "Model-predicted ≈2.5–3× a typical US woman",
+    source: "WASD 2024 AWQR · Main System",
+    note: "Key Biscayne and Brickell are on the WASD Main System — same Hazard Index 1.1, peak 1.3, as Hialeah, Doral, Coral Gables, Pinecrest. The affluent ZIPs drink the same water as Hialeah.",
+  },
+};
+
+function showZip() {
+  const sel = document.getElementById("zipPicker").value;
+  const r = document.getElementById("result");
+  if (!sel) { r.classList.remove("active"); r.innerHTML = ""; return; }
+  const z = zipData[sel];
+  r.innerHTML = `
+    <div class="head"><span class="pill">${z.badge}</span>${z.title}</div>
+    <div class="result-grid">
+      <div class="stat-tile">
+        <div class="lab">PFOS in your tap</div>
+        <div class="num red">${typeof z.pfos === 'number' ? z.pfos + ' ppt' : z.pfos}</div>
+        <div class="ctx">Federal MCL is 4 ppt. Source: ${z.source}.</div>
+      </div>
+      <div class="stat-tile">
+        <div class="lab">Multiple of MCL</div>
+        <div class="num red">${z.multiple}</div>
+        <div class="ctx">How much your water exceeds the April 2024 federal limit for PFOS.</div>
+      </div>
+      <div class="stat-tile">
+        <div class="lab">PFOA in your tap</div>
+        <div class="num red">${typeof z.pfoa === 'number' ? z.pfoa + ' ppt' : z.pfoa}</div>
+        <div class="ctx">IARC Group 1 carcinogen (Nov 2023). Federal MCL is 4 ppt.</div>
+      </div>
+      <div class="stat-tile">
+        <div class="lab">Model-predicted maternal serum</div>
+        <div class="num red">${z.serum}</div>
+        <div class="ctx">Predicted (not measured) from Andrews &amp; Naidenko 2020 — ~0.14 ng/mL serum per 1 ppt water at 5+ year steady state. Ask your OB or pediatrician about an actual serum PFAS panel.</div>
+      </div>
+    </div>
+    <p style="font-family:var(--serif);font-style:italic;font-size:16px;color:var(--stone);line-height:1.55;margin:18px 0 0">${z.note}</p>
+  `;
+  r.classList.add("active");
+  r.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+</script>
+
+</body>
+</html>
